@@ -1,10 +1,9 @@
 <template>
   <div id="app" class="container">
     <Navbar :user="user" @signIn="signInWithGoogle" @signOut="signOut"/>
+
     <div class="row">
-      <div class="card col-12" v-for="item in items" :key="item.name">
-        <WishlistItemCard :item="item"/>
-      </div>
+        <WishlistItemCard :item="item" v-for="item in items" :key="item.name"/>
     </div>
 
     <div class="row" v-if="user">

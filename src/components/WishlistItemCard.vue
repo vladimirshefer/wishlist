@@ -1,11 +1,13 @@
 <template>
-  <div class="card-body">
-    <div class="wishlist-item-card">
+  <div class="card col-12">
+    <div class="card-body">
+      <div class="wishlist-item-card">
+      </div>
+      <h5 class="card-title">{{ item.name }}</h5>
+      <p><b>{{ item.cost }} ₽.</b></p>
+      <a class="card-link" target="_blank" v-if="item.link" :href="item.link">Открыть</a>
+      <span style="color: gray" v-else>Ссылка отсутствует</span>
     </div>
-    <h5 class="card-title">{{ item.name }}</h5>
-    <p><b>{{ item.cost }} ₽.</b></p>
-    <a class="card-link" target="_blank" v-if="item.link" :href="item.link">Открыть</a>
-    <span style="color: gray" v-else>Ссылка отсутствует</span>
   </div>
 </template>
 
