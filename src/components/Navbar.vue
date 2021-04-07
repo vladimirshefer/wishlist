@@ -1,7 +1,11 @@
 <template>
 
   <b-navbar toggleable="lg" type="light" variant="light">
-    <b-navbar-brand href="#">WishList</b-navbar-brand>
+
+    <b-navbar-brand href="#">
+      <b-avatar square variant="light" :src="logoUrl"/>
+      WishList
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -29,6 +33,11 @@ export default {
   name: "Navbar",
   props: {
     user: {type: Object, required: true}
+  },
+  data() {
+    return {
+      logoUrl: require('@/assets/logo.png')
+    }
   }
 }
 </script>
