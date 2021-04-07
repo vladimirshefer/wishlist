@@ -3,7 +3,7 @@
     <Navbar :user="user" @signIn="signInWithGoogle" @signOut="signOut"/>
 
     <div class="row">
-        <WishlistItemCard :item="item" v-for="item in items" :key="item.name"/>
+        <WishlistItemCard :item="item" v-for="item in items" :key="item.name" @remove="removeWishlistItem(item.id)"/>
     </div>
 
     <div class="row" v-if="user">
@@ -42,13 +42,15 @@ export default {
       firebase.auth().signOut();
     },
     addWishlistItem(item) {
-      alert("adding")
       firebase.firestore().collection("wishlistItems").add(
           {
             ...item,
             uid: this.user.uid
           }
       )
+    },
+    removeWishlistItem(id) {
+      firebase.firestore().collection("wishlistItems").doc(id).delete();
     }
   },
   mounted() {
