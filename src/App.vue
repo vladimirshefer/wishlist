@@ -57,7 +57,12 @@ export default {
       firebase.firestore().collection("wishlistItems")
           .where("uid", "==", this.user.uid || "")
           .onSnapshot(querySnapshot => {
-            this.items = querySnapshot.docs.map(it => it.data())
+            this.items = querySnapshot.docs.map(it => {
+              return {
+                ...it.data(),
+                id: it.id
+              }
+            })
           })
     })
 
