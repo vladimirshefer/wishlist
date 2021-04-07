@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-12">
+  <div class="card col-12 wishlist-item">
     <div class="card-body">
       <div class="wishlist-item-card">
       </div>
@@ -20,6 +20,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.wishlist-item {
+  margin-bottom: 10px;
+}
 </style>
