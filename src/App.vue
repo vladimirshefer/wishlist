@@ -56,16 +56,21 @@ export default {
   mounted() {
     firebase.auth().onAuthStateChanged(user => {
       this.user = user;
-      firebase.firestore().collection("wishlistItems")
-          .where("uid", "==", this.user.uid || "")
-          .onSnapshot(querySnapshot => {
-            this.items = querySnapshot.docs.map(it => {
-              return {
-                ...it.data(),
-                id: it.id
-              }
+
+      if (this.user != null) {
+        firebase.firestore().collection("wishlistItems")
+            .where("uid", "==", this.user.uid)
+            .onSnapshot(querySnapshot => {
+              this.items = querySnapshot.docs.map(it => {
+                return {
+                  ...it.data(),
+                  id: it.id
+                }
+              })
             })
-          })
+      } else {
+        this.items = []
+      }
     })
 
   }
