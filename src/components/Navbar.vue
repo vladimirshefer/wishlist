@@ -18,7 +18,7 @@
           <b-dropdown-item disabled :href="'/user/'+user.uid">{{ user.displayName || user.email}}</b-dropdown-item>
           <b-dropdown-item href="#" @click="$emit('signOut')">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item right v-if="!user" @click="$emit('signIn')">Войти</b-nav-item>
+        <b-nav-item right v-if="!user" @click="$emit('signIn')"><b-icon icon="google"/> Войти</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
