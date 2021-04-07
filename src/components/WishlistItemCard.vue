@@ -17,7 +17,7 @@
 </template>
 
 <script>
-// import firebase from 'firebase/app';
+import firebase from 'firebase/app';
 
 export default {
   name: "WishlistItemCard",
@@ -26,8 +26,7 @@ export default {
   },
   methods: {
     removeItem(item) {
-      console.log(item);
-      //  firebase.firestore().collection("wishlistItems").doc(item.uid).delete();
+       firebase.firestore().collection("wishlistItems").doc(item.id).delete();
     }
   }
 }
