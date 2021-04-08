@@ -27,7 +27,8 @@ export default {
       firebase.firestore().collection("wishlistItems").add(
           {
             ...item,
-            uid: this.user.uid
+            uid: this.user.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
           }
       )
     }
