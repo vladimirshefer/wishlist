@@ -12,7 +12,7 @@
           <p>
             Список автоматически синхронизируется с облаком.
           </p>
-          <b-button v-if="!user"  variant="primary" href="#">Войти</b-button>
+          <b-button v-if="!user" variant="primary" href="#" @click="signInWithGoogle">Войти</b-button>
           <b-button v-else v-b-modal.modal-add-item variant="primary" href="#">Добавить желание</b-button>
           <b-modal id="modal-add-item" title="Добавить желание">
             <div>Форма внизу страницы. // TODO</div>
@@ -43,6 +43,10 @@ export default {
     }
   },
   methods: {
+    signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider);
+    },
     addWishlistItem(item) {
       firebase.firestore().collection("wishlistItems").add(
           {
