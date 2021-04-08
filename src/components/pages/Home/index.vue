@@ -20,7 +20,6 @@
         </b-jumbotron>
       </div>
     </div>
-    <UserWishlist editable :user-id="(user ? user.uid : null)"/>
     <div class="row" v-if="user">
       <div class="col-12">
         <AddForm @submit="addWishlistItem($event)"/>
@@ -30,13 +29,12 @@
 </template>
 
 <script>
-import UserWishlist from "@/components/UserWishlist";
 import AddForm from "@/components/AddForm";
 import firebase from "firebase";
 
 export default {
   name: "Home",
-  components: {AddForm, UserWishlist},
+  components: {AddForm},
   data() {
     return {
       user: firebase.auth().currentUser
