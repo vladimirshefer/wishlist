@@ -18,18 +18,19 @@ export default {
   },
   data() {
     return {
-      items: []
+      items: [],
+      unsubscribe: function () {}
     }
   },
   methods: {
     removeWishlistItem(id) {
       firebase.firestore().collection("wishlistItems").doc(id).delete();
-    }
-  },
-  watch: {
-    userId(userId) {
+    },
+    init(userId){
+      this.unsubscribe()
+
       if (userId != null) {
-        firebase.firestore().collection("wishlistItems")
+        this.unsubscribe = firebase.firestore().collection("wishlistItems")
             .where("uid", "==", userId)
             .onSnapshot(querySnapshot => {
               this.items = querySnapshot.docs.map(it => {
@@ -43,6 +44,14 @@ export default {
         this.items = []
       }
     }
+  },
+  watch: {
+    userId(userId) {
+      this.init(userId);
+    }
+  },
+  mounted() {
+    this.init(this.userId);
   }
 }
 </script>
