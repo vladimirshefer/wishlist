@@ -36,7 +36,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history', // Unsupported by GitHub pages
   routes
 })
 
