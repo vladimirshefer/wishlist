@@ -8,6 +8,7 @@ import "firebase/auth"
 import "firebase/firestore"
 import App from './App.vue'
 import Home from '@/components/pages/Home'
+import User from "@/components/pages/User";
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -30,7 +31,8 @@ firebase.initializeApp(firebaseConfig);
 Vue.config.productionTip = false
 
 const routes = [
-  { path: '/', component: Home }
+  { path: '/', component: Home },
+  { path: '/user/:userId', component: User },
 ]
 
 const router = new VueRouter({
