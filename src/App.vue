@@ -1,30 +1,20 @@
 <template>
   <div id="app" class="container">
     <Navbar :user="user" @signIn="signInWithGoogle" @signOut="signOut"/>
-
-    <UserWishlist :user-id="(user ? user.uid : null)"/>
-
-    <div class="row" v-if="user">
-      <div class="col-12">
-        <AddForm @submit="addWishlistItem($event)"/>
-      </div>
-    </div>
-
+    <router-view/>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase/app'
-import AddForm from "@/components/AddForm";
 import Navbar from "@/components/Navbar";
-import UserWishlist from "@/components/UserWishlist";
 
 export default {
   name: 'App',
-  components: {UserWishlist, Navbar, AddForm},
+  components: { Navbar},
   data() {
     return {
-      user: null,
+      user: firebase.auth().currentUser,
       form: {
         name: "",
       },
@@ -38,14 +28,6 @@ export default {
     },
     signOut() {
       firebase.auth().signOut();
-    },
-    addWishlistItem(item) {
-      firebase.firestore().collection("wishlistItems").add(
-          {
-            ...item,
-            uid: this.user.uid
-          }
-      )
     }
   },
   mounted() {
