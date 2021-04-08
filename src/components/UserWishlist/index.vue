@@ -14,18 +14,21 @@
       </div>
     </div>
     <div class="col-12" v-for="item in items" :key="item.name">
-      <WishlistItemCard :item="item" :editable="editable" @remove="removeWishlistItem(item.id)"/>
+      <ItemCardWrapper :item="item" :editable="editable"
+                        @remove="removeWishlistItem(item.id)"
+                        @update="editItem($event)"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
-import WishlistItemCard from "@/components/UserWishlist/WishlistItemCard";
+import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper";
 
 export default {
   name: "UserWishlist",
-  components: {WishlistItemCard},
+  components: {ItemCardWrapper},
   props: {
     userId: {type: String, required: false},
     editable: {type: Boolean, required: false, default: false}
@@ -42,6 +45,9 @@ export default {
       if (this.editable) {
         firebase.firestore().collection("wishlistItems").doc(id).delete();
       }
+    },
+    editItem(item) {
+      firebase.firestore().collection("wishlistItems").doc(item.id).update(item)
     },
     init(userId) {
       this.unsubscribe()

@@ -1,11 +1,12 @@
 <template>
-    <div class="card wishlist-item">
+    <div class="card">
       <div class="card-body">
         <div class="wishlist-item-card">
         </div>
         <h5 class="card-title">
           {{ item.name }}
           <b-dropdown v-if="editable" variant="light" size="sm">
+            <b-dropdown-item @click="$emit('edit')">Изменить</b-dropdown-item>
             <b-dropdown-item @click="tryRemove">Удалить</b-dropdown-item>
           </b-dropdown>
         </h5>
@@ -25,7 +26,7 @@
 <script>
 
 export default {
-  name: "WishlistItemCard",
+  name: "ItemCard",
   props: {
     item: {type: Object, required: true},
     editable: {type: Boolean, required: false, default: false}
@@ -45,8 +46,3 @@ export default {
 }
 </script>
 
-<style>
-.wishlist-item {
-  margin-bottom: 10px;
-}
-</style>
