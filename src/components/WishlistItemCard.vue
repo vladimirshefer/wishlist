@@ -7,7 +7,7 @@
         <h5 class="card-title">
           {{ item.name }}
           <b-dropdown variant="light" size="sm">
-            <b-dropdown-item @click="$emit('remove')">Удалить</b-dropdown-item>
+            <b-dropdown-item @click="tryRemove">Удалить</b-dropdown-item>
           </b-dropdown>
         </h5>
         <p><b>{{ item.cost }} ₽.</b></p>
@@ -24,6 +24,13 @@ export default {
   name: "WishlistItemCard",
   props: {
     item: {type: Object, required: true}
+  },
+  methods: {
+    tryRemove(){
+      if (confirm("Удалить желание?")) {
+        this.$emit('remove')
+      }
+    }
   }
 }
 </script>
