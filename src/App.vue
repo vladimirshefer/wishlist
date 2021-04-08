@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <Navbar :user="user" @signIn="signInWithGoogle" @signOut="signOut"/>
 
-    <UserWishlistItems :user-id="(user ? user.uid : null)"/>
+    <UserWishlist :user-id="(user ? user.uid : null)"/>
 
     <div class="row" v-if="user">
       <div class="col-12">
@@ -17,11 +17,11 @@
 import firebase from 'firebase/app'
 import AddForm from "@/components/AddForm";
 import Navbar from "@/components/Navbar";
-import UserWishlistItems from "@/components/UserWishlistItems";
+import UserWishlist from "@/components/UserWishlist";
 
 export default {
   name: 'App',
-  components: {UserWishlistItems, Navbar, AddForm},
+  components: {UserWishlist, Navbar, AddForm},
   data() {
     return {
       user: null,

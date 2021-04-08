@@ -8,10 +8,10 @@
 
 <script>
 import firebase from "firebase";
-import WishlistItemCard from "@/components/WishlistItemCard";
+import WishlistItemCard from "@/components/UserWishlist/WishlistItemCard";
 
 export default {
-  name: "UserWishlistItems",
+  name: "UserWishlist",
   components: {WishlistItemCard},
   props: {
     userId: {type: String, required: false}
