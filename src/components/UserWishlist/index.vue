@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-12" v-for="item in items" :key="item.name" >
-      <WishlistItemCard :item="item" @remove="removeWishlistItem(item.id)"/>
+    <div class="col-12" v-for="item in items" :key="item.name">
+      <WishlistItemCard :item="item" :editable="editable" @remove="removeWishlistItem(item.id)"/>
     </div>
   </div>
 </template>
@@ -14,7 +14,8 @@ export default {
   name: "UserWishlist",
   components: {WishlistItemCard},
   props: {
-    userId: {type: String, required: false}
+    userId: {type: String, required: false},
+    editable: {type: Boolean, required: false, default: false}
   },
   data() {
     return {
@@ -24,7 +25,9 @@ export default {
   },
   methods: {
     removeWishlistItem(id) {
-      firebase.firestore().collection("wishlistItems").doc(id).delete();
+      if (this.editable) {
+        firebase.firestore().collection("wishlistItems").doc(id).delete();
+      }
     },
     init(userId){
       this.unsubscribe()
