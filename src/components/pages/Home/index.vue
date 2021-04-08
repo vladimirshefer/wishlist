@@ -1,5 +1,25 @@
 <template>
   <div>
+    <div class="row">
+      <div class="col-12">
+        <b-jumbotron>
+          <template #header>Мой список желаний</template>
+
+          <template #lead>
+            Здесь можно поделиться с друзьями идеями подарков для Вас.
+          </template>
+          <hr class="my-4">
+          <p>
+            Список автоматически синхронизируется с облаком.
+          </p>
+          <b-button v-if="!user"  variant="primary" href="#">Войти</b-button>
+          <b-button v-else v-b-modal.modal-add-item variant="primary" href="#">Добавить желание</b-button>
+          <b-modal id="modal-add-item" title="Добавить желание">
+            <div>Форма внизу страницы. // TODO</div>
+          </b-modal>
+        </b-jumbotron>
+      </div>
+    </div>
     <UserWishlist editable :user-id="(user ? user.uid : null)"/>
     <div class="row" v-if="user">
       <div class="col-12">
