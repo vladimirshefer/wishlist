@@ -22,19 +22,19 @@
     </div>
     <div class="row" v-if="user">
       <div class="col-12">
-        <AddForm @submit="addWishlistItem($event)"/>
+        <ItemEditForm :item="{}" @submit="addWishlistItem($event)"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AddForm from "@/components/AddForm";
 import firebase from "firebase";
+import ItemEditForm from "@/components/UserWishlist/ItemEditForm";
 
 export default {
   name: "Home",
-  components: {AddForm},
+  components: {ItemEditForm},
   data() {
     return {
       user: firebase.auth().currentUser
