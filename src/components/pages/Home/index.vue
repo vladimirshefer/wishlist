@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserWishlist :user-id="(user ? user.uid : null)"/>
+    <UserWishlist editable :user-id="(user ? user.uid : null)"/>
     <div class="row" v-if="user">
       <div class="col-12">
         <AddForm @submit="addWishlistItem($event)"/>
