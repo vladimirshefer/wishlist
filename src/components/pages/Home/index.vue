@@ -20,21 +20,14 @@
         </b-jumbotron>
       </div>
     </div>
-    <div class="row" v-if="user">
-      <div class="col-12">
-        <ItemEditForm :item="{}" @submit="addWishlistItem($event)"/>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
-import ItemEditForm from "@/components/UserWishlist/ItemEditForm";
 
 export default {
   name: "Home",
-  components: {ItemEditForm},
   data() {
     return {
       user: firebase.auth().currentUser
@@ -45,15 +38,6 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider);
     },
-    addWishlistItem(item) {
-      firebase.firestore().collection("wishlistItems").add(
-          {
-            ...item,
-            uid: this.user.uid,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          }
-      )
-    }
   },
   mounted() {
     firebase.auth().onAuthStateChanged(user => this.user = user)
