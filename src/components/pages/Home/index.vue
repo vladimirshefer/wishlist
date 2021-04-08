@@ -13,10 +13,10 @@
             Список автоматически синхронизируется с облаком.
           </p>
           <b-button v-if="!user" variant="primary" href="#" @click="signInWithGoogle">Войти</b-button>
-          <b-button v-else v-b-modal.modal-add-item variant="primary" href="#">Добавить желание</b-button>
-          <b-modal id="modal-add-item" title="Добавить желание">
-            <div>Форма внизу страницы. // TODO</div>
-          </b-modal>
+          <router-link v-else :to="'/user/' + user.uid"
+                       v-slot="{href}">
+            <b-button v-b-modal.modal-add-item variant="primary" :href="href">Открыть мой список</b-button>
+          </router-link>
         </b-jumbotron>
       </div>
     </div>
