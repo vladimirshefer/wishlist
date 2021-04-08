@@ -20,21 +20,14 @@
         </b-jumbotron>
       </div>
     </div>
-    <div class="row" v-if="user">
-      <div class="col-12">
-        <AddForm @submit="addWishlistItem($event)"/>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import AddForm from "@/components/AddForm";
 import firebase from "firebase";
 
 export default {
   name: "Home",
-  components: {AddForm},
   data() {
     return {
       user: firebase.auth().currentUser
@@ -45,15 +38,6 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider);
     },
-    addWishlistItem(item) {
-      firebase.firestore().collection("wishlistItems").add(
-          {
-            ...item,
-            uid: this.user.uid,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          }
-      )
-    }
   },
   mounted() {
     firebase.auth().onAuthStateChanged(user => this.user = user)
