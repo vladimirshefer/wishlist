@@ -5,7 +5,7 @@
         </div>
         <h5 class="card-title">
           {{ item.name }}
-          <b-dropdown variant="light" size="sm">
+          <b-dropdown v-if="editable" variant="light" size="sm">
             <b-dropdown-item @click="tryRemove">Удалить</b-dropdown-item>
           </b-dropdown>
         </h5>
@@ -27,7 +27,8 @@
 export default {
   name: "WishlistItemCard",
   props: {
-    item: {type: Object, required: true}
+    item: {type: Object, required: true},
+    editable: {type: Boolean, required: false, default: false}
   },
   methods: {
     tryRemove() {
