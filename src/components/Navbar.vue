@@ -11,6 +11,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
+        <b-nav-item v-if="user" :href="myProfileLink">Моя страница</b-nav-item>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
@@ -37,6 +38,15 @@ export default {
   data() {
     return {
       logoUrl: require('@/assets/logo.png')
+    }
+  },
+  computed: {
+    myProfileLink() {
+      if (!this.user || !this.user.uid) {
+        return this.$router.resolve("/").href
+      }
+
+      return this.$router.resolve("/user/" + this.user.uid).href
     }
   }
 }
