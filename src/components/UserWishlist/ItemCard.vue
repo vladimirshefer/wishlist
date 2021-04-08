@@ -11,6 +11,9 @@
           </b-dropdown>
         </h5>
         <p><b>{{ item.cost }} ₽.</b></p>
+        <div class="mb-2">
+          <b-badge pill class="mr-2 p-2" v-for="(tag, index) in item.tags" :key="index" :variant="getColorForTag(tag)">{{tag}}</b-badge>
+        </div>
         <b-button v-if="item.link" :href="item.link"
                   class="card-button" target="_blank" size="sm" variant="primary">
           Открыть <b-icon icon="box-arrow-up-right"/>
@@ -31,12 +34,20 @@ export default {
     item: {type: Object, required: true},
     editable: {type: Boolean, required: false, default: false}
   },
+  data() {
+    return {
+      colors: ["primary", "secondary", "succes", "danger", "warning", "info", "dark"],
+    }
+  },
   methods: {
     tryRemove() {
       if (confirm("Удалить желание?")) {
         this.$emit('remove')
       }
-    }
+    },
+    getColorForTag(value) {
+      return this.colors[value.charCodeAt(0) % this.colors.length];
+    },
   },
   computed: {
     searchLink() {
