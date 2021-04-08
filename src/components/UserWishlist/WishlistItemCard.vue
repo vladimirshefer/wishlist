@@ -10,8 +10,14 @@
           </b-dropdown>
         </h5>
         <p><b>{{ item.cost }} ₽.</b></p>
-        <b-link v-if="item.link" class="card-link" target="_blank" :href="item.link">Открыть</b-link>
-        <b-link v-else class="card-link" target="_blank" :href="searchLink">Найти</b-link>
+        <b-button v-if="item.link" :href="item.link"
+                  class="card-button" target="_blank" size="sm" variant="primary">
+          Открыть <b-icon icon="box-arrow-up-right"/>
+        </b-button>
+        <b-button v-else :href="searchLink"
+                  class="card-button" target="_blank" size="sm" variant="primary">
+         <b-icon icon="google"/> Поиск
+        </b-button>
       </div>
     </div>
 </template>
