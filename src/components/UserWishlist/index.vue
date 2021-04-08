@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       items: [],
-      unsubscribe: function () {}
+      unsubscribe: function () {
+      }
     }
   },
   methods: {
@@ -29,7 +30,7 @@ export default {
         firebase.firestore().collection("wishlistItems").doc(id).delete();
       }
     },
-    init(userId){
+    init(userId) {
       this.unsubscribe()
 
       if (userId != null) {
