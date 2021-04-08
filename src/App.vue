@@ -2,9 +2,7 @@
   <div id="app" class="container">
     <Navbar :user="user" @signIn="signInWithGoogle" @signOut="signOut"/>
 
-    <div class="row">
-        <WishlistItemCard :item="item" v-for="item in items" :key="item.name" @remove="removeWishlistItem(item.id)"/>
-    </div>
+    <UserWishlistItems :user-id="(user ? user.uid : null)"/>
 
     <div class="row" v-if="user">
       <div class="col-12">
@@ -18,12 +16,12 @@
 <script>
 import firebase from 'firebase/app'
 import AddForm from "@/components/AddForm";
-import WishlistItemCard from "@/components/WishlistItemCard";
 import Navbar from "@/components/Navbar";
+import UserWishlistItems from "@/components/UserWishlistItems";
 
 export default {
   name: 'App',
-  components: {Navbar, WishlistItemCard, AddForm},
+  components: {UserWishlistItems, Navbar, AddForm},
   data() {
     return {
       user: null,
@@ -48,31 +46,10 @@ export default {
             uid: this.user.uid
           }
       )
-    },
-    removeWishlistItem(id) {
-      firebase.firestore().collection("wishlistItems").doc(id).delete();
     }
   },
   mounted() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.user = user;
-
-      if (this.user != null) {
-        firebase.firestore().collection("wishlistItems")
-            .where("uid", "==", this.user.uid)
-            .onSnapshot(querySnapshot => {
-              this.items = querySnapshot.docs.map(it => {
-                return {
-                  ...it.data(),
-                  id: it.id
-                }
-              })
-            })
-      } else {
-        this.items = []
-      }
-    })
-
+    firebase.auth().onAuthStateChanged(user => this.user = user)
   }
 }
 </script>

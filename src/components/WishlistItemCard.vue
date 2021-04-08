@@ -1,5 +1,4 @@
 <template>
-  <div class="col-12">
     <div class="card wishlist-item">
       <div class="card-body">
         <div class="wishlist-item-card">
@@ -15,7 +14,6 @@
         <span style="color: gray" v-else>Ссылка отсутствует</span>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
