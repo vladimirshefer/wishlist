@@ -1,4 +1,6 @@
-# todo
+# Wishlist ([Goto site ⬀](https://wishlist.shefer.dev/))
+
+Web application to share your wishes.
 
 ## Project setup
 ```
