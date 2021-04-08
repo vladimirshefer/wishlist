@@ -1,5 +1,18 @@
 <template>
   <div class="row">
+    <div class="col-12" v-if="items.length == 0">
+      <div class="card wishlist-item">
+        <div class="card-body">
+          <div class="wishlist-item-card">
+          </div>
+          <h3 class="card-title">
+            Все желания уже выполнены?
+          </h3>
+          <h5>В этом списке ничего нет :)</h5>
+          <b-button v-if="!editable" variant="primary" href="/" class="mt-2">На главную</b-button>
+        </div>
+      </div>
+    </div>
     <div class="col-12" v-for="item in items" :key="item.name">
       <WishlistItemCard :item="item" :editable="editable" @remove="removeWishlistItem(item.id)"/>
     </div>
