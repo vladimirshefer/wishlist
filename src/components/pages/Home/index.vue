@@ -14,7 +14,7 @@
           </p>
           <b-button v-if="!user" variant="primary" href="#" @click="signInWithGoogle">Войти</b-button>
           <router-link v-else :to="'/user/' + user.uid"
-                       v-slot="{href}">
+                       v-slot="{href}" custom>
             <b-button v-b-modal.modal-add-item variant="primary" :href="href">Открыть мой список</b-button>
           </router-link>
         </b-jumbotron>

@@ -2,7 +2,7 @@
 
   <b-navbar toggleable="lg" type="light" variant="light">
 
-    <router-link to="/" v-slot="{ href }">
+    <router-link to="/" v-slot="{ href }" custom>
       <b-navbar-brand :href="href">
         <b-avatar square variant="light" :src="logoUrl"/>
         WishList
@@ -14,7 +14,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <router-link v-if="user" :to="'/user/' + user.uid"
-                     v-slot="{href}">
+                     v-slot="{href}" custom>
           <b-nav-item :href="href">Мои желания</b-nav-item>
         </router-link>
       </b-navbar-nav>
