@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <FilterBar ref="filterBar" @apply="filter = $event"/>
     <div class="col-12" v-if="items.length == 0">
       <div class="card wishlist-item">
         <div class="card-body">
@@ -13,10 +14,12 @@
         </div>
       </div>
     </div>
-    <div class="col-12" v-for="item in items" :key="item.name">
+
+    <div class="col-12" v-for="item in itemsFiltered" :key="item.name">
       <ItemCardWrapper :item="item" :editable="editable"
-                        @remove="removeWishlistItem(item.id)"
-                        @update="editItem($event)"
+                       @remove="removeWishlistItem(item.id)"
+                       @update="editItem($event)"
+                       @clickOnTag="$refs.filterBar.addFilterTag($event)"
       />
     </div>
   </div>
@@ -25,19 +28,45 @@
 <script>
 import firebase from "firebase";
 import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper";
+import * as R from "ramda"
+import FilterBar from "@/components/UserWishlist/FilterBar";
 
 export default {
   name: "UserWishlist",
-  components: {ItemCardWrapper},
+  components: {FilterBar, ItemCardWrapper},
   props: {
     userId: {type: String, required: false},
-    editable: {type: Boolean, required: false, default: false}
+    editable: {type: Boolean, required: false, default: false},
   },
   data() {
     return {
       items: [],
       unsubscribe: function () {
+      },
+      filter: {
+        tags: [],
+      },
+    }
+  },
+  computed: {
+    itemsFiltered() {
+      let result = this.items;
+
+      if (!this.filter) {
+        return result;
       }
+
+      if (!!this.filter.tags && Array.isArray(this.filter.tags) && this.filter.tags.length > 0) {
+        result = result.filter(item => {
+              if (R.isNil(item.tags) || item.tags.length === 0) {
+                return false;
+              }
+              return R.any(tag => this.filter.tags.includes(tag))(item.tags)
+            }
+        )
+      }
+
+      return result
     }
   },
   methods: {
@@ -66,7 +95,7 @@ export default {
       } else {
         this.items = []
       }
-    }
+    },
   },
   watch: {
     userId(userId) {

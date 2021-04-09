@@ -1,8 +1,9 @@
 <template>
   <div class="my-1">
     <ItemCard v-show="!isEditing" :item="item" :editable="editable"
-                      @remove="$emit('remove', $event)"
-                      @edit="isEditing = true"
+              @remove="$emit('remove', $event)"
+              @edit="isEditing = true"
+              @clickOnTag="$emit('clickOnTag', $event)"
     />
     <ItemEditForm v-if="isEditing" :item="item"
                   @submit="$emit('update', $event); isEditing=false"

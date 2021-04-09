@@ -53,13 +53,16 @@
                       clickable
                       @click="removeTag(tag)"/>
           </div>
-          <b-input-group>
+          <b-input-group size="sm">
             <b-form-input
                 placeholder="Одежда"
                 v-model="tag"
+                size="sm"
                 @keydown.enter="addTag"
-            ></b-form-input>
-            <b-button variant="outline-primary" @click="addTag">Добавить</b-button>
+            />
+            <b-input-group-append>
+              <b-button size="sm" variant="outline-primary" @click="addTag">Добавить</b-button>
+            </b-input-group-append>
           </b-input-group>
         </b-form-group>
 

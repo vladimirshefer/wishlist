@@ -11,9 +11,16 @@
         </b-dropdown>
       </h5>
       <p><b>{{ item.cost }} ₽.</b></p>
-      <div class="mb-2">
-        <TagBadge v-for="(tag) in item.tags" :key="tag" :tag="tag"/>
+
+      <div>
+        <TagBadge :tag="tag"
+                  v-for="(tag) in item.tags" :key="tag"
+                  class="mb-2"
+                  @click="$emit('clickOnTag', tag)"
+                  clickable
+                 />
       </div>
+
       <b-button v-if="item.link" :href="item.link"
                 class="card-button" target="_blank" size="sm" variant="primary">
         Открыть
