@@ -31,6 +31,9 @@ export default {
   width: 100%;
   height: 50px; /* Set the fixed height of the footer here */
   line-height: 30px; /* Vertically center the text there */
+}
+
+.footer .container{
   border-top: 1px solid gray;
 }
 
