@@ -16,13 +16,12 @@ Vue.use(IconsPlugin)
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyBLGiP1kAHt-gM6foaONlhD0Satwe38Vlk",
-  authDomain: "receipt-project-88138.firebaseapp.com",
-  databaseURL: "https://receipt-project-88138.firebaseio.com",
-  projectId: "receipt-project-88138",
-  storageBucket: "receipt-project-88138.appspot.com",
-  messagingSenderId: "970273276542",
-  appId: "1:970273276542:web:c3de5d19047ce2863b8e2f"
+  apiKey: "AIzaSyACtgZ3RVsV4asdNWLtlbTtbrb-BocsXjk",
+  authDomain: "wishlist-for-friends.firebaseapp.com",
+  projectId: "wishlist-for-friends",
+  storageBucket: "wishlist-for-friends.appspot.com",
+  messagingSenderId: "491027786294",
+  appId: "1:491027786294:web:ed36804351917d5052c697"
 };
 
 // Initialize Firebase
