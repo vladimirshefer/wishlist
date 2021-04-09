@@ -4,6 +4,7 @@
            :style="{cursor: clickable?'pointer':'default'}"
   >
     {{ tag }}
+    <b-icon icon="tag-fill"/>
   </b-badge>
 </template>
 
