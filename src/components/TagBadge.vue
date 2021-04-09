@@ -1,5 +1,8 @@
 <template>
-  <b-badge pill class="tag-badge mr-2" :variant="color">
+  <b-badge pill class="tag-badge mr-2" :variant="color"
+           @click="$emit('click')"
+           :style="{cursor: clickable?'pointer':'default'}"
+  >
     {{ tag }}
   </b-badge>
 </template>
@@ -8,7 +11,8 @@
 export default {
   name: "TagBadge",
   props: {
-    tag: {type: String, required: true}
+    tag: {type: String, required: true},
+    clickable: {type: Boolean, required: false, default: false}
   },
   data() {
     return {

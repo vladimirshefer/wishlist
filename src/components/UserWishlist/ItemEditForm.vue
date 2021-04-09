@@ -49,7 +49,9 @@
             label="Теги:"
             label-for="input-tags">
           <div class="mb-2">
-            <TagBadge v-for="(tag) in form.tags" :key="tag" :tag="tag"/>
+            <TagBadge v-for="(tag) in form.tags" :key="tag" :tag="tag"
+                      clickable
+                      @click="removeTag(tag)"/>
           </div>
           <b-input-group>
             <b-form-input
@@ -119,6 +121,9 @@ export default {
 
       this.tag = "";
     },
+    removeTag(tag) {
+      this.form.tags = this.form.tags.filter(it => it !== tag)
+    }
   },
   created() {
     this.reset()
