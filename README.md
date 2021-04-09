@@ -1,6 +1,19 @@
-# Wishlist ([Goto site ⬀](https://wishlist.shefer.dev/))
+# Wishlist (<a href="https://wishlist.shefer.dev/" target="_blank">Goto site ⬀</a>)
+
 
 Web application to share your wishes.
+
+## Technologies used:
+- Vue 2
+- Vue CLI
+- Vue Router
+- Bootstrap
+- Firebase
+  - Firebase Auth
+  - Firebase Firestore
+- Github
+  - GitHub Actions
+  - GitHub Pages
 
 ## Project setup
 ```
