@@ -18,8 +18,6 @@
             <b-button v-b-modal.modal-add-item variant="primary" :href="href">Открыть мой список</b-button>
           </router-link>
         </b-jumbotron>
-        <h3>Желания других пользователей:</h3>
-        <Feed :max-size="4"/>
       </div>
     </div>
     <div class="row">
@@ -32,8 +30,6 @@
 </template>
 
 <script>
-import Feed from "@/components/pages/Home/Feed";
-
 import firebase from "firebase";
 import Feed from "@/components/pages/Home/Feed";
 
