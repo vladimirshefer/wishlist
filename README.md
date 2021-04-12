@@ -7,6 +7,7 @@ Web application to share your wishes.
 - Vue 2
 - Vue CLI
 - Vue Router
+- Vuex
 - Bootstrap
 - Firebase
   - Firebase Auth
@@ -14,6 +15,8 @@ Web application to share your wishes.
 - Github
   - GitHub Actions
   - GitHub Pages
+- JS Libs:
+  - DayJs
 
 ## Project setup
 ```
