@@ -1,10 +1,10 @@
 <template>
 
-  <b-navbar toggleable="lg" type="light" variant="light">
+  <b-navbar toggleable="lg" type="light" variant="custom" :style="{background: '#e9ecef', borderRadius: '0 0 0.3rem 0.3rem'}">
 
     <router-link to="/" v-slot="{ href }" custom>
       <b-navbar-brand :href="href">
-        <b-avatar square variant="light" :src="logoUrl"/>
+        <b-avatar square variant="transparent" :src="logoUrl"/>
         WishList
       </b-navbar-brand>
     </router-link>
