@@ -31,7 +31,13 @@ export default {
   name: "UserWishlist",
   components: {ItemCardWrapper},
   props: {
+    /**
+     * Used to filter list by owner.
+     */
     userId: {type: String, required: false},
+    /**
+     * Show edit buttons/controls.
+     */
     editable: {type: Boolean, required: false, default: false}
   },
   data() {
@@ -56,8 +62,16 @@ export default {
       this.unsubscribe()
 
       if (userId != null) {
-        this.unsubscribe = firebase.firestore().collection("wishlistItems")
-            .where("uid", "==", userId)
+        let targetCollectionSelection = firebase.firestore().collection("wishlistItems")
+            .where("uid", "==", userId);
+
+        // eslint-disable-next-line
+        if (!this.editable) {
+          targetCollectionSelection = targetCollectionSelection
+              .where("private", "==", false)
+        }
+
+        this.unsubscribe = targetCollectionSelection
             .onSnapshot(querySnapshot => {
               this.items = querySnapshot.docs.map(it => {
                 return {
