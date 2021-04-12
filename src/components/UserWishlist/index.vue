@@ -88,6 +88,9 @@ export default {
   watch: {
     userId(userId) {
       this.init(userId);
+    },
+    editable() {
+      this.init(this.userId);
     }
   },
   mounted() {
