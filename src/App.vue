@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <Navbar :user="user" @signIn="signInWithGoogle" @signOut="signOut"/>
+      <Navbar @signIn="signInWithGoogle" @signOut="signOut"/>
       <router-view/>
     </div>
     <Footer/>
@@ -18,11 +18,15 @@ export default {
   components: {Footer, Navbar},
   data() {
     return {
-      user: firebase.auth().currentUser,
       form: {
         name: "",
       },
       items: []
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
     }
   },
   methods: {
@@ -35,8 +39,10 @@ export default {
     }
   },
   mounted() {
-    firebase.auth().onAuthStateChanged(user => this.user = user)
-  }
+    firebase.auth().onAuthStateChanged(user => {
+      this.$store.commit("updateFirebaseAuth", user)
+    })
+  },
 }
 </script>
 
@@ -51,6 +57,6 @@ html {
 }
 
 body {
-  margin-bottom: 65px; /* Margin bottom by footer height */
+  margin-bottom: 65px !important; /* Margin bottom by footer height */
 }
 </style>

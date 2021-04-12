@@ -19,12 +19,10 @@ import {wishlistItems} from "@/firestore.wishlistItems";
 export default {
   name: "User",
   components: {ItemEditForm, UserWishlist},
-  data() {
-    return {
-      user: firebase.auth().currentUser,
-    }
-  },
   computed: {
+    user() {
+      return this.$store.state.user
+    },
     userId() {
       return this.$route.params.userId;
     },
@@ -42,9 +40,6 @@ export default {
           }
       )
     },
-  },
-  mounted() {
-    firebase.auth().onAuthStateChanged(user => this.user = user);
   }
 }
 </script>

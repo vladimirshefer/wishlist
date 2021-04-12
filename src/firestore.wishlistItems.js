@@ -1,6 +1,8 @@
 export const wishlistItems = {
     utils: {
         normalize(item) {
+            delete item.id;
+
             if (typeof item.private === "undefined") {
                 item.private = false
             } else if (typeof item.private === "string") {

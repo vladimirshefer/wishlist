@@ -18,19 +18,31 @@
             <b-button v-b-modal.modal-add-item variant="primary" :href="href">Открыть мой список</b-button>
           </router-link>
         </b-jumbotron>
+        <h3>Желания других пользователей:</h3>
+        <Feed :max-size="4"/>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <h3>Желания других пользователей:</h3>
+      </div>
+    </div>
+    <Feed :max-size="10"/>
   </div>
 </template>
 
 <script>
+import Feed from "@/components/pages/Home/Feed";
+
 import firebase from "firebase";
+import Feed from "@/components/pages/Home/Feed";
 
 export default {
   name: "Home",
-  data() {
-    return {
-      user: firebase.auth().currentUser
+  components: {Feed},
+  computed: {
+    user() {
+      return this.$store.state.user
     }
   },
   methods: {
@@ -38,9 +50,6 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider);
     },
-  },
-  mounted() {
-    firebase.auth().onAuthStateChanged(user => this.user = user)
   }
 }
 </script>
