@@ -51,6 +51,6 @@ html {
 }
 
 body {
-  margin-bottom: 65px; /* Margin bottom by footer height */
+  margin-bottom: 65px !important; /* Margin bottom by footer height */
 }
 </style>
