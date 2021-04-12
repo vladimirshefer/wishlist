@@ -16,6 +16,8 @@
 import UserWishlist from "@/components/UserWishlist";
 import firebase from "firebase";
 import ItemEditForm from "@/components/UserWishlist/ItemEditForm";
+import {wishlistItems} from "@/firestore.wishlistItems";
+
 export default {
   name: "User",
   components: {ItemEditForm, UserWishlist},
@@ -36,7 +38,7 @@ export default {
     addWishlistItem(item) {
       firebase.firestore().collection("wishlistItems").add(
           {
-            ...item,
+            ...wishlistItems.utils.normalize(item),
             uid: this.user.uid,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           }

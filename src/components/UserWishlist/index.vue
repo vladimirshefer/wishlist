@@ -25,6 +25,7 @@
 <script>
 import firebase from "firebase";
 import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper";
+import {wishlistItems} from "@/firestore.wishlistItems";
 
 export default {
   name: "UserWishlist",
@@ -47,7 +48,9 @@ export default {
       }
     },
     editItem(item) {
-      firebase.firestore().collection("wishlistItems").doc(item.id).update(item)
+      firebase.firestore().collection("wishlistItems").doc(item.id).update(
+          wishlistItems.utils.normalize(item)
+      )
     },
     init(userId) {
       this.unsubscribe()
