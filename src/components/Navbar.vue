@@ -35,16 +35,19 @@
 </template>
 
 <script>
+
 export default {
   name: "Navbar",
-  props: {
-    user: {type: Object, required: true}
-  },
   data() {
     return {
-      logoUrl: require('@/assets/logo.png')
+      logoUrl: require('@/assets/logo.png'),
     }
-  }
+  },
+  computed: {
+    user(){
+      return this.$store.state.user
+    }
+  },
 }
 </script>
 

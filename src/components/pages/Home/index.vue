@@ -28,9 +28,10 @@ import firebase from "firebase";
 
 export default {
   name: "Home",
-  data() {
-    return {
-      user: firebase.auth().currentUser
+  components: {Feed},
+  computed: {
+    user() {
+      return this.$store.state.user
     }
   },
   methods: {
@@ -38,9 +39,6 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider);
     },
-  },
-  mounted() {
-    firebase.auth().onAuthStateChanged(user => this.user = user)
   }
 }
 </script>
