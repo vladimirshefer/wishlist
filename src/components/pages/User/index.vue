@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div>
-      <UserWishlist :editable="isMyPage" :user-id="userId"/>
-      <div class="row" v-if="isMyPage">
-        <div class="col-12">
-          <h4 class="mt-3">Добавить желание:</h4>
-          <ItemEditForm :item="{}" @submit="addWishlistItem($event)"/>
-        </div>
+    <UserWishlist :editable="isMyPage" :user-id="userId"/>
+    <div class="row" v-if="isMyPage">
+      <div class="col-12">
+        <h4 class="mt-3">Добавить желание:</h4>
+        <ItemEditForm :item="{}" @submit="addWishlistItem($event)"/>
       </div>
     </div>
   </div>
