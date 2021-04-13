@@ -16,7 +16,7 @@
         </div>
         <b-button v-if="item.stored.link" :href="item.stored.link"
                   class="card-button mr-2" target="_blank" size="sm" variant="primary">
-          Открыть
+          Перейти в магазин
           <b-icon icon="box-arrow-up-right"/>
         </b-button>
         <template v-if="user">
