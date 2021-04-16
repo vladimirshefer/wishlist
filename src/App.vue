@@ -38,7 +38,7 @@ export default {
       firebase.auth().signOut();
     }
   },
-  mounted() {
+  beforeMount() {
     firebase.auth().onAuthStateChanged(user => {
       this.$store.commit("updateFirebaseAuth", user)
     })

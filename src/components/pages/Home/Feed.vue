@@ -46,7 +46,7 @@ export default {
           })
     },
   },
-  mounted() {
+  beforeMount() {
     this.init();
   }
 }

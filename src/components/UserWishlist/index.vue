@@ -93,7 +93,7 @@ export default {
       this.init(this.userId);
     }
   },
-  mounted() {
+  beforeMount() {
     this.init(this.userId);
   }
 }
