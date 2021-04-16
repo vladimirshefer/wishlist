@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import db from "@/db";
 import FeedItem from "@/components/pages/Home/FeedItem";
 
 export default {
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     init() {
-      let targetCollectionSelection = firebase.firestore().collection("wishlistItems")
+      let targetCollectionSelection = db.wishlistItems
           .where("private", "==", false)
 
       if (this.maxSize > 0) {

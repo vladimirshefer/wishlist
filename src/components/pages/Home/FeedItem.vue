@@ -42,6 +42,7 @@ import {wishlistItems} from "@/firestore.wishlistItems";
 import firebase from "firebase";
 import dayjs from "dayjs"
 import TagBadge from "@/components/TagBadge";
+import db from "@/db";
 
 export default {
   name: "FeedItem",
@@ -83,7 +84,7 @@ export default {
         return
       }
 
-      firebase.firestore().collection("wishlistItems").add({
+      db.wishlistItems.add({
         ...wishlistItems.utils.normalize(item.stored),
         uid: firebase.auth().currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()

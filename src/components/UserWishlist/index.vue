@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import db from "@/db";
 import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper";
 import {wishlistItems} from "@/firestore.wishlistItems";
 
@@ -50,11 +50,11 @@ export default {
   methods: {
     removeWishlistItem(id) {
       if (this.editable) {
-        firebase.firestore().collection("wishlistItems").doc(id).delete();
+        db.wishlistItems.doc(id).delete();
       }
     },
     editItem(item) {
-      firebase.firestore().collection("wishlistItems").doc(item.id).update(
+      db.wishlistItems.doc(item.id).update(
           wishlistItems.utils.normalize(item)
       )
     },
@@ -62,7 +62,7 @@ export default {
       this.unsubscribe()
 
       if (userId != null) {
-        let targetCollectionSelection = firebase.firestore().collection("wishlistItems")
+        let targetCollectionSelection = db.wishlistItems
             .where("uid", "==", userId);
 
         // eslint-disable-next-line
