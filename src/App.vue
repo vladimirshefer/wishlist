@@ -12,6 +12,29 @@
 import firebase from 'firebase/app'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import profileService from "@/services/profileService";
+
+async function onAuthStateChanged(user, actionWithProfile, profileUnsubscribeGetter, profileUnsubscribeSetter) {
+  await profileService.initUserProfile(user.uid)
+  this.$store.state._profileUnsubscribe()
+  let unsubscribe = profileService.subscribeOnProfileByUserId(user.uid,
+      profile => actionWithProfile(profile));
+  profileUnsubscribeSetter(unsubscribe)
+}
+
+// eslint-disable-next-line no-unused-vars
+async function initUser(actionWithUser, actionWithProfile, profileUnsubscribeGetter, profileUnsubscribeSetter) {
+  actionWithUser(firebase.auth().currentUser)
+  firebase.auth().onAuthStateChanged(user => {
+    actionWithUser(user)
+    if (user) {
+      onAuthStateChanged(user, actionWithProfile, profileUnsubscribeGetter, profileUnsubscribeSetter)
+    }
+  })
+}
+
+let profileUnsubscribe = function () {
+}
 
 export default {
   name: 'App',
@@ -39,8 +62,25 @@ export default {
     }
   },
   beforeMount() {
+    this.$store.commit("updateFirebaseAuth", firebase.auth().currentUser)
     firebase.auth().onAuthStateChanged(user => {
       this.$store.commit("updateFirebaseAuth", user)
+      if (user) {
+        profileService.initUserProfile(user.uid)
+            .then(() => {
+              //  profileUnsubscribe()
+              // this.$store.state._profileUnsubscribe()
+              // let unsubscribe = profileService.subscribeOnProfileByUserId(user.uid,
+              //     profile => this.$store.commit("setUserProfile", profile));
+              // profileUnsubscribe = unsubscribe()
+              // this.$store.commit("setUserProfileUnsubscribe", unsubscribe)
+              profileService.getUserProfileOrNull(user.uid).then(profile => this.$store.commit("setUserProfile", profile))
+            })
+      } else {
+        profileUnsubscribe()
+        this.$store.state._profileUnsubscribe()
+        this.$store.commit("setUserProfile", null)
+      }
     })
   },
 }
