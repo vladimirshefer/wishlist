@@ -23,7 +23,7 @@
         <b-nav-item-dropdown right v-if="user">
           <!-- Using 'button-content' slot -->
           <template #button-content>
-            {{ user.displayName || user.email }}
+            {{ profile.displayName || user.displayName || user.email }}
             <b-avatar variant="light" :src="user.photoURL" class="ml-1"/>
           </template>
 
@@ -60,6 +60,9 @@ export default {
   computed: {
     user(){
       return this.$store.state.user
+    },
+    profile(){
+      return this.$store.state.profile || {}
     }
   },
 }

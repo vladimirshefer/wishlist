@@ -91,6 +91,8 @@ export default {
         displayName: this.displayName,
         about: this.about
       })
+
+      this.$store.dispatch("reloadUserProfile")
     },
     reset(event) {
       event.preventDefault()

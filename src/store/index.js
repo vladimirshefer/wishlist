@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import profileService from "@/services/profileService";
 
 Vue.use(Vuex)
 
@@ -7,8 +8,6 @@ let store = new Vuex.Store({
     state: {
         user: null,
         profile: null,
-        _profileUnsubscribe: function () {
-        },
     },
     mutations: {
         updateFirebaseAuth(state, user) {
@@ -20,11 +19,19 @@ let store = new Vuex.Store({
         setUserProfile(state, profile) {
             state.profile = profile
         },
-        setUserProfileUnsubscribe(state, unsubscribe) {
-            state._profileUnsubscribe = unsubscribe
-        },
     },
-    actions: {}
+    actions: {
+        async reloadUserProfile(context) {
+            let userProfileOrNull;
+            if (context.state.user) {
+                userProfileOrNull = await profileService.getUserProfileOrNull(context.state.user.uid)
+            } else {
+                userProfileOrNull = null
+            }
+
+            context.commit("setUserProfile", userProfileOrNull)
+        }
+    }
 });
 
 export default store
