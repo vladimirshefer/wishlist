@@ -23,10 +23,24 @@
         <b-nav-item-dropdown right v-if="user">
           <!-- Using 'button-content' slot -->
           <template #button-content>
-            <b-avatar variant="light" :src="user.photoURL"/>
+            {{ profile.displayName || user.displayName || user.email }}
+            <b-avatar variant="light" :src="user.photoURL" class="ml-1"/>
           </template>
-          <b-dropdown-item disabled href="#">{{ user.displayName || user.email}}</b-dropdown-item>
-          <b-dropdown-item href="#" @click="$emit('signOut')"><b-icon icon="box-arrow-right"/> Выйти</b-dropdown-item>
+
+          <b-dropdown-item disabled href="#"></b-dropdown-item>
+
+          <router-link to="/profile/" v-slot="{ href }" custom>
+            <b-dropdown-item :href="href">
+              <b-icon icon="person"/>
+              Профиль
+            </b-dropdown-item>
+          </router-link>
+
+          <b-dropdown-item href="#" @click="$emit('signOut')">
+            <b-icon icon="box-arrow-right"/>
+            Выйти
+          </b-dropdown-item>
+
         </b-nav-item-dropdown>
         <b-nav-item right v-if="!user" @click="$emit('signIn')"><b-icon icon="google"/> Войти</b-nav-item>
       </b-navbar-nav>
@@ -46,6 +60,9 @@ export default {
   computed: {
     user(){
       return this.$store.state.user
+    },
+    profile(){
+      return this.$store.state.profile || {}
     }
   },
 }

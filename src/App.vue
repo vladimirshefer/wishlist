@@ -39,8 +39,10 @@ export default {
     }
   },
   beforeMount() {
+    this.$store.commit("updateFirebaseAuth", firebase.auth().currentUser)
     firebase.auth().onAuthStateChanged(user => {
       this.$store.commit("updateFirebaseAuth", user)
+      this.$store.dispatch("reloadUserProfile")
     })
   },
 }
