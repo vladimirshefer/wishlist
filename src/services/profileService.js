@@ -5,7 +5,7 @@ export default {
     saveProfile(profile) {
         db.userProfiles
             .doc(firebase.auth().currentUser.uid)
-            .set(profile)
+            .set(profile, {merge: true})
             .catch(error => {
                 console.error("Could not create or update profile", JSON.stringify(error), error)
             })
