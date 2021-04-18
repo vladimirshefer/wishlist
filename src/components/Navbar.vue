@@ -24,7 +24,7 @@
           <!-- Using 'button-content' slot -->
           <template #button-content>
             {{ profile.displayName || user.displayName || user.email }}
-            <b-avatar variant="light" :src="user.photoURL" class="ml-1"/>
+            <b-avatar variant="light" :src="profile.photoURL || user.photoURL" class="ml-1"/>
           </template>
 
           <b-dropdown-item disabled href="#"></b-dropdown-item>

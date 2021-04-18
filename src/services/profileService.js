@@ -10,31 +10,23 @@ export default {
                 console.error("Could not create or update profile", JSON.stringify(error), error)
             })
     },
-    /**
-     * @param uid User id
-     * @param actionWithUpdatedProfile What to do with profile on receive or updates
-     * @returns {() => void} Function which should be called to stop receiving updates of profile.
-     */
-    subscribeOnProfileByUserId(uid, actionWithUpdatedProfile) {
-        return db.userProfiles.doc(uid)
-            .onSnapshot(
-                profile => {
-                    actionWithUpdatedProfile(profile.data())
-                },
-                error => {
-                    console.error(error)
-                    actionWithUpdatedProfile(null);
-                },
-            )
-    },
-    async initUserProfile(uid) {
-        if (await this.getUserProfileOrNull(uid) === null) {
-            await db.userProfiles.doc(uid).set({})
+    async initUserProfile() {
+        let currentUser = firebase.auth().currentUser;
+
+        if (!currentUser) {
+            return
         }
+
+        let profile = await this.getUserProfileOrNull(currentUser.uid) || {};
+
+        await db.userProfiles.doc(currentUser.uid).set({
+            displayName: profile.displayName || currentUser.displayName,
+            photoURL: profile.photoURL || currentUser.photoURL,
+        }, {merge: true})
     },
     async getUserProfileOrNull(uid) {
         try {
-            return (await db.userProfiles.doc(uid).get()).data()
+            return (await db.userProfiles.doc(uid).get()).data() || null
         } catch (e) {
             return null
         }

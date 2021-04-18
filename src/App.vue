@@ -12,6 +12,7 @@
 import firebase from 'firebase/app'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import profileService from "@/services/profileService";
 
 export default {
   name: 'App',
@@ -42,7 +43,9 @@ export default {
     this.$store.commit("updateFirebaseAuth", firebase.auth().currentUser)
     firebase.auth().onAuthStateChanged(user => {
       this.$store.commit("updateFirebaseAuth", user)
-      this.$store.dispatch("reloadUserProfile")
+      profileService.initUserProfile().then(() => {
+        this.$store.dispatch("reloadUserProfile")
+      })
     })
   },
 }
