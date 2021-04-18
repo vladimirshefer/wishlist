@@ -2,11 +2,18 @@
   <div class="col-xs-12 col-md-6">
     <div class="card mb-2">
       <div class="card-body">
+        <div v-if="profile" class="d-flex mb-2">
+          <router-link :to="'/user/'+item.stored.uid" :slot="{href}">
+            <a :href="href">
+              <b-avatar size="sm" :src="profile.photoURL" class="mr-1"/>
+              {{ profile.displayName || "Anonymous" }}</a>
+          </router-link>
+        </div>
         <div>
-        <h5 class="card-title">
-          <span>{{ item.stored.name }}</span>
-        </h5>
-        <small class="text-muted">{{ createdAtStr }}</small>
+          <h5 class="card-title">
+            <span>{{ item.stored.name }}</span>
+          </h5>
+          <small class="text-muted">{{ createdAtStr }}</small>
         </div>
         <div>
           <b>{{ item.stored.cost }} ₽.</b>
@@ -43,6 +50,7 @@ import firebase from "firebase";
 import dayjs from "dayjs"
 import TagBadge from "@/components/TagBadge";
 import db from "@/db";
+import profileService from "@/services/profileService";
 
 export default {
   name: "FeedItem",
@@ -52,6 +60,7 @@ export default {
   },
   data() {
     return {
+      profile: null,
       isAdded: false,
     }
   },
@@ -88,6 +97,9 @@ export default {
       })
       this.isAdded = true
     },
+  },
+  async beforeMount() {
+    this.profile = await profileService.getUserProfileOrNull(this.item.stored.uid)
   }
 }
 </script>
