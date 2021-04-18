@@ -17,8 +17,6 @@ export default {
   data() {
     return {
       items: [],
-      unsubscribe: function () {
-      }
     }
   },
   methods: {
