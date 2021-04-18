@@ -76,9 +76,6 @@ export default {
     }
   },
   methods: {
-    searchLink(item) {
-      return 'https://www.google.com/search?q=' + item.stored.name // TODO sanitize
-    },
     addToMyList(item) {
       if (this.isAdded) {
         return
