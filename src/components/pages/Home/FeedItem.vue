@@ -4,16 +4,17 @@
       <div class="card-body">
         <div v-if="profile" class="d-flex mb-2">
           <router-link :to="'/user/'+item.stored.uid" :slot="{href}">
-            <a :href="href">
+            <a :href="href" class="mr-2">
               <b-avatar size="sm" :src="profile.photoURL" class="mr-1"/>
-              {{ profile.displayName || "Anonymous" }}</a>
+              {{ profile.displayName || "Anonymous" }}
+            </a>
+            <small class="text-muted">{{ createdAtStr }}</small>
           </router-link>
         </div>
         <div>
           <h5 class="card-title">
             <span>{{ item.stored.name }}</span>
           </h5>
-          <small class="text-muted">{{ createdAtStr }}</small>
         </div>
         <div>
           <b>{{ item.stored.cost }} ₽.</b>
@@ -74,11 +75,11 @@ export default {
     createdAtStr() {
       let createdAt = this.item.createdAt;
       let now = dayjs()
-      if (createdAt.year() != now.year()) {
-        return createdAt.format("hh:mm DD MMM YYYY")
+      if (createdAt.year() !== now.year()) {
+        return createdAt.format("DD.MM.YYYY, hh:mm")
       }
-      if (createdAt.date() != now.date()) {
-        return createdAt.format("hh:mm DD MMM")
+      if (createdAt.date() !== now.date()) {
+        return createdAt.format("DD MMM, hh:mm")
       } else {
         return createdAt.format("hh:mm")
       }
