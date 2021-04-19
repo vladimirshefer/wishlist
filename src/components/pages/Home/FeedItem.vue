@@ -3,13 +3,13 @@
     <div class="card mb-2">
       <div class="card-body">
         <div v-if="profile" class="d-flex mb-2">
-          <router-link :to="'/user/'+item.stored.uid" :slot="{href}">
+          <router-link :to="'/user/'+item.stored.uid" v-slot="{href}" custom>
             <a :href="href" class="mr-2">
               <b-avatar size="sm" :src="profile.photoURL" class="mr-1"/>
               {{ profile.displayName || "Anonymous" }}
             </a>
-            <small class="text-muted">{{ createdAtStr }}</small>
           </router-link>
+          <small class="text-muted">{{ createdAtStr }}</small>
         </div>
         <div>
           <h5 class="card-title">
