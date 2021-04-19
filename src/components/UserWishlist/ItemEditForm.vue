@@ -16,6 +16,23 @@
         </b-form-group>
 
         <b-form-group
+            id="input-group-description"
+            label="Комментарий"
+            label-for="input-description"
+        >
+          <b-form-textarea
+              id="input-description"
+              v-model="form.description"
+              type="string"
+              size="sm"
+              placeholder="Мне это нужно для..."
+              rows="3"
+              max-rows="8"
+          ></b-form-textarea>
+          <small v-if="false" TODO class="text-muted">Попробуйте <b>#хештеги.</b></small>
+        </b-form-group>
+
+        <b-form-group
           id="input-group-cost"
           label="Стоимость:"
           label-for="input-cost"
@@ -32,19 +49,6 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group
-          id="input-group-description"
-          label="Я хочу..."
-          label-for="input-description"
-        >
-          <b-form-textarea
-            id="input-description"
-            v-model="form.description"
-            type="string"
-            placeholder="Опишите подробнее"
-            rows="3"
-          ></b-form-textarea>
-        </b-form-group>
 
         <b-form-group
           id="input-group-link"
