@@ -7,7 +7,16 @@
               <b-avatar square size="lg" variant="light" v-if="profile.photoURL" :src="profile.photoURL"/>
             </div>
             <div>
-              <h1 style="font-size: 2rem; font-weight: bold">{{ profile.displayName }}</h1>
+              <div>
+                <h1 class="d-inline mr-1 align-baseline" style="font-size: 2rem; font-weight: bold">
+                  {{ profile.displayName }}
+                  <a @click="toggleSubscription" v-show="subscribed!=null"
+                     :title="subscribed?'Удалить из избранного':'Добавить в избранное'">
+                    <b-icon scale="0.6"
+                            :icon="subscribed?'star-fill':'star'"/>
+                  </a>
+                </h1>
+              </div>
               <p>
                 {{ profile.about }}
               </p>
@@ -36,13 +45,15 @@ import ItemEditForm from "@/components/UserWishlist/ItemEditForm";
 import {wishlistItems} from "@/firestore.wishlistItems";
 import db from "@/db";
 import profileService from "@/services/profileService";
+import subscriptionService from "@/services/subscriptionService";
 
 export default {
   name: "User",
   components: {ItemEditForm, UserWishlist},
   data() {
     return {
-      profile: {}
+      profile: {},
+      subscribed: null,
     }
   },
   computed: {
@@ -68,11 +79,33 @@ export default {
     },
     async reloadUserProfile(userId) {
       this.profile = await profileService.getUserProfileOrNull(userId) || {}
+
+      if (this.isMyPage || !this.user) {
+        this.subscribed = null
+      } else {
+        this.subscribed = !!(await subscriptionService.getSubscriptionOrNull(this.user.uid, userId))
+      }
+    },
+    async toggleSubscription() {
+      if (!this.user) return
+
+      let subscribed = this.subscribed;
+      this.subscribed = null // to hide button until data loads
+      if (subscribed === false) {
+        await subscriptionService.subscribe(this.user.uid, this.userId)
+      } else {
+        await subscriptionService.unsubscribe(this.user.uid, this.userId)
+      }
+
+      await this.reloadUserProfile(this.userId)
     }
   },
   watch: {
-    async userId(userId){
+    async userId(userId) {
       await this.reloadUserProfile(userId)
+    },
+    async user() {
+      await this.reloadUserProfile(this.userId)
     }
   },
   async beforeMount() {

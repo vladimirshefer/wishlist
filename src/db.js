@@ -9,4 +9,5 @@ function collection(collectionPath) {
 export default {
     wishlistItems: collection("wishlistItems"),
     userProfiles: collection("userProfiles"),
+    subscriptions: collection("subscriptions"),
 }
