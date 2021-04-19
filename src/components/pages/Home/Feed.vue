@@ -7,6 +7,7 @@
 <script>
 import db from "@/db";
 import FeedItem from "@/components/pages/Home/FeedItem";
+import dayjs from "dayjs";
 
 export default {
   name: "Feed",
@@ -34,13 +35,16 @@ export default {
       targetCollectionSelection
           .get()
           .then(querySnapshot => {
-            this.items = querySnapshot.docs.map(it => {
-              return {
-                stored: {...it.data()},
-                id: it.id,
-                added: false,
-              }
-            })
+            this.items = querySnapshot.docs
+                .map(it => {
+                  let item = it.data()
+                  return {
+                    stored: {...item},
+                    id: it.id,
+                    createdAt: item.createdAt ? dayjs(new Date(item.createdAt.seconds * 1000)) : null,
+                  }
+                })
+                .sort((a, b) => b.createdAt.unix() - a.createdAt.unix()) // sort descending by date
           })
     },
   },

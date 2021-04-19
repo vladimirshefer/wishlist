@@ -72,7 +72,7 @@ export default {
       return this.item.stored.uid === this.user.uid
     },
     createdAtStr() {
-      let createdAt = dayjs(new Date(this.item.stored.createdAt.seconds * 1000));
+      let createdAt = this.item.createdAt;
       let now = dayjs()
       if (createdAt.year() != now.year()) {
         return createdAt.format("hh:mm DD MMM YYYY")
