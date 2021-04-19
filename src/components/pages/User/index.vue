@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-12" v-if="profile">
         <div class="p-3 d-flex">
             <div class="mr-4">
               <b-avatar square size="lg" variant="light" v-if="profile.photoURL" :src="profile.photoURL"/>
             </div>
             <div>
-              <h1 style="font-size: 2rem; font-weight: bold">{{ profile.displayName || userId }}</h1>
+              <h1 style="font-size: 2rem; font-weight: bold">{{ profile.displayName }}</h1>
               <p>
                 {{ profile.about }}
               </p>
