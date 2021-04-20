@@ -4,8 +4,17 @@
       <div class="row">
         <div class="col-12">
           <div class="footer-contents">
+            <img
+              src="../../img/made-in2.svg"
+              width="70"
+              height="90"
+              alt="Made in Russia"
+            />
             <span>© 2021 Vladimir Shefer.</span>
-            <a href="https://github.com/vladimirshefer/wishlist" target="_blank">
+            <a
+              href="https://github.com/vladimirshefer/wishlist"
+              target="_blank"
+            >
               GitHub
             </a>
             <a href=" https://gitter.im/wishlist-app/community" target="_blank">
@@ -20,8 +29,8 @@
 
 <script>
 export default {
-  name: "Footer"
-}
+  name: "Footer",
+};
 </script>
 
 <style scoped>
@@ -33,8 +42,11 @@ export default {
   line-height: 30px; /* Vertically center the text there */
 }
 
-.footer .container{
+.footer .container {
   border-top: 1px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .footer-contents > * {
