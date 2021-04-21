@@ -77,11 +77,9 @@
 </template>
 
 <script>
-import { wishlistItems } from "@/firestore.wishlistItems";
-import firebase from "firebase";
+import wishlistItemsService from "@/services/wishlistItemsService";
 import dayjs from "dayjs";
 import TagBadge from "@/components/TagBadge";
-import db from "@/db";
 import profileService from "@/services/profileService";
 
 export default {
@@ -122,11 +120,7 @@ export default {
         return;
       }
 
-      db.wishlistItems.add({
-        ...wishlistItems.utils.normalize(item.stored),
-        uid: firebase.auth().currentUser.uid,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      wishlistItemsService.create(item.stored)
       this.isAdded = true;
     },
   },

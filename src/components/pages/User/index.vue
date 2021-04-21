@@ -40,12 +40,10 @@
 
 <script>
 import UserWishlist from "@/components/UserWishlist";
-import firebase from "firebase";
 import ItemEditForm from "@/components/UserWishlist/ItemEditForm";
-import {wishlistItems} from "@/firestore.wishlistItems";
-import db from "@/db";
 import profileService from "@/services/profileService";
 import subscriptionService from "@/services/subscriptionService";
+import wishlistItemsService from "@/services/wishlistItemsService";
 
 export default {
   name: "User",
@@ -68,14 +66,8 @@ export default {
     }
   },
   methods: {
-    addWishlistItem(item) {
-      db.wishlistItems.add(
-          {
-            ...wishlistItems.utils.normalize(item),
-            uid: this.user.uid,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          }
-      )
+    async addWishlistItem(item) {
+      await wishlistItemsService.create(item)
     },
     async reloadUserProfile(userId) {
       this.profile = await profileService.getUserProfileOrNull(userId) || {}
