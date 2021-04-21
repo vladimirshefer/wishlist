@@ -1,6 +1,6 @@
 <template>
 
-  <b-navbar toggleable="lg" type="light" variant="custom" :style="{background: '#e9ecef', borderRadius: '0 0 0.3rem 0.3rem'}">
+  <b-navbar toggleable="lg" type="light" variant="custom" sticky :style="{background: '#ffffff'}">
 
     <router-link to="/" v-slot="{ href }" custom>
       <b-navbar-brand :href="href">
