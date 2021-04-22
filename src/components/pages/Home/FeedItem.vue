@@ -16,7 +16,14 @@
           <small class="text-muted">{{ createdAtStr }}</small>
         </div>
         <div>
-          <h5 class="card-title">
+          <h5
+            class="card-title"
+            style="
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            "
+          >
             <span>{{ item.stored.name }}</span>
           </h5>
         </div>
