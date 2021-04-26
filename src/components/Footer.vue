@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <div class="footer-contents">
+          <div class="footer-contents d-flex">
             <span>© 2021 Vladimir Shefer.</span>
             <a
               href="https://github.com/vladimirshefer/wishlist"
@@ -15,6 +15,7 @@
               Gitter
             </a>
             <img
+              class="ml-auto"
               src="../../img/img made-in.svg"
               width="70"
               height="30"
@@ -48,6 +49,5 @@ export default {
 
 .footer-contents > * {
   margin-right: 15px;
-  display: inline-block;
 }
 </style>
