@@ -16,7 +16,7 @@
             </a>
             <img
               class="ml-auto"
-              src="../../img/img made-in.svg"
+              :src="madeIn"
               width="70"
               height="30"
               alt="Made in Russia"
@@ -31,6 +31,11 @@
 <script>
 export default {
   name: "Footer",
+  data() {
+    return {
+      madeIn: require("@/../img/made-in.svg"),
+    };
+  },
 };
 </script>
 
