@@ -55,6 +55,19 @@
           <b-icon icon="google" />
           Поиск
         </b-button>
+        <div class="status-progress">
+          <p>Накоплено:</p>
+          <div class="progress">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              style="width: 25%"
+              :aria-valuenow="progressStatus"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
