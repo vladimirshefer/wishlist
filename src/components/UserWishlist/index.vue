@@ -35,7 +35,7 @@
 <script>
 import db from "@/db";
 import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper";
-import { wishlistItems } from "@/firestore.wishlistItems";
+import wishlistItemsService from "@/services/wishlistItemsService";
 
 export default {
   name: "UserWishlist",
@@ -64,7 +64,7 @@ export default {
       }
     },
     editItem(item) {
-      db.wishlistItems.doc(item.id).update(wishlistItems.utils.normalize(item));
+      wishlistItemsService.edit(item.id, item)
     },
     init(userId) {
       this.unsubscribe();
