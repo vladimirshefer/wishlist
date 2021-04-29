@@ -142,9 +142,14 @@ export default {
     };
   },
   computed: {
-    progressStatus() {
-      return (this.progress / this.cost) * 100;
-    },
+    // progressStatus() {
+    //   return (this.progress / this.cost) * 100;
+    // },
+    // styleProgress() {
+    //   return {
+    //     width: this.progressStatus + "%",
+    //   };
+    // },
   },
   methods: {
     reset() {

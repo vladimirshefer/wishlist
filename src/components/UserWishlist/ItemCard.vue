@@ -62,7 +62,7 @@
               class="progress-bar bg-success"
               role="progressbar"
               style="width: 25%"
-              :aria-valuenow="progressStatus"
+              aria-valuenow="25"
               aria-valuemin="0"
               aria-valuemax="100"
             ></div>
@@ -94,6 +94,14 @@ export default {
     searchLink() {
       return "https://www.google.com/search?q=" + this.item.name; // TODO sanitize
     },
+    // progressStatus() {
+    //   return (this.progress / this.cost) * 100;
+    // },
+    // styleProgress() {
+    //   return {
+    //     width: this.progressStatus,
+    //   };
+    // },
   },
 };
 </script>
