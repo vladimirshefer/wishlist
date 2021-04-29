@@ -33,7 +33,7 @@ export default {
   name: "Footer",
   data() {
     return {
-      madeIn: require("@/../img/made-in.svg"),
+      madeIn: require("@/assets/made-in.svg"),
     };
   },
 };
