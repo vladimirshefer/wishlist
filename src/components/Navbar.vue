@@ -15,7 +15,17 @@
       <b-navbar-nav>
         <router-link v-if="user" :to="'/user/' + user.uid"
                      v-slot="{href}" custom>
-          <b-nav-item :href="href">Мои желания</b-nav-item>
+          <b-nav-item :href="href">
+            <b-icon icon="house-door"/>
+            <span class="ml-1">Мои желания</span>
+          </b-nav-item>
+        </router-link>
+
+        <router-link v-if="user" to="/fav/" v-slot="{href}" custom>
+          <b-nav-item :href="href">
+            <b-icon icon="star"/>
+            <span class="ml-1">Избранное</span>
+          </b-nav-item>
         </router-link>
       </b-navbar-nav>
 

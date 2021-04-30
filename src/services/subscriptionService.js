@@ -33,4 +33,12 @@ export default {
             return null
         }
     },
+    async getSubscriptions(subscriberId) {
+        if (!subscriberId) return [];
+
+        let querySnapshot = await db.subscriptions
+          .where("subscriber", "==", subscriberId)
+          .get();
+        return querySnapshot.docs.map(it => it.data())
+    },
 }
