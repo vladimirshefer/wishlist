@@ -61,7 +61,7 @@
             <div
               class="progress-bar bg-success"
               role="progressbar"
-              style="width: 25%"
+              :style="{ width: progressPercent + '%' }"
               aria-valuenow="25"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -94,9 +94,9 @@ export default {
     searchLink() {
       return "https://www.google.com/search?q=" + this.item.name; // TODO sanitize
     },
-    // progressStatus() {
-    //   return (this.progress / this.cost) * 100;
-    // },
+    progressPercent() {
+      return (this.progress / this.cost) * 100;
+    },
     // styleProgress() {
     //   return {
     //     width: this.progressStatus,
