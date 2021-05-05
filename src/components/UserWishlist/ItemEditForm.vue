@@ -52,7 +52,21 @@
             required
           ></b-form-input>
         </b-form-group>
-
+        <b-form-group
+          id="input-group-progress"
+          label="Сколько денег накоплено:"
+          label-for="input-progress"
+        >
+          <b-form-input
+            id="input-progress"
+            v-model="form.progress"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="10000.0"
+            required
+          ></b-form-input>
+        </b-form-group>
         <b-form-group
           id="input-group-link"
           label="Ссылка на товар:"
@@ -92,21 +106,7 @@
             >
           </b-input-group>
         </b-form-group>
-        <b-form-group
-          id="input-group-progress"
-          label="Сколько денег накоплено:"
-          label-for="input-progress"
-        >
-          <b-form-input
-            id="input-progress"
-            v-model="form.progress"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="10000.0"
-            required
-          ></b-form-input>
-        </b-form-group>
+
         <b-button class="mr-1" type="submit" size="sm" variant="primary"
           >Сохранить</b-button
         >

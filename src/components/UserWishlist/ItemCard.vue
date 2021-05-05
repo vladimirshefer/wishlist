@@ -30,6 +30,13 @@
         <p>
           <b>{{ item.cost }} ₽</b>
         </p>
+        <b-progress :max="max" class="w-50 mt-2 mb-3" height="15px">
+          <b-progress-bar :value="value">
+            <span>
+              <strong>{{ value.toFixed(2) }} / {{ max }}</strong></span
+            >
+          </b-progress-bar>
+        </b-progress>
         <div class="mb-2">
           <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag" />
         </div>
@@ -55,19 +62,6 @@
           <b-icon icon="google" />
           Поиск
         </b-button>
-        <div class="status-progress">
-          <p>Накоплено:</p>
-          <div class="progress">
-            <div
-              class="progress-bar bg-success"
-              role="progressbar"
-              :style="{ width: progressPercent + '%' }"
-              aria-valuenow="25"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -83,6 +77,12 @@ export default {
     item: { type: Object, required: true },
     editable: { type: Boolean, required: false, default: false },
   },
+  data() {
+    return {
+      value: (this.item.progress / this.item.cost) * 100,
+      max: 100,
+    };
+  },
   methods: {
     tryRemove() {
       if (confirm("Удалить желание?")) {
@@ -94,12 +94,9 @@ export default {
     searchLink() {
       return "https://www.google.com/search?q=" + this.item.name; // TODO sanitize
     },
-    progressPercent() {
-      return (this.progress / this.cost) * 100;
-    },
-    // styleProgress() {
+    // progressValue() {
     //   return {
-    //     width: this.progressStatus,
+    //     value: (this.item.progress / this.item.cost) * 100,
     //   };
     // },
   },
