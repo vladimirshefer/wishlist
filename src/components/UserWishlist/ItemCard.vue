@@ -34,7 +34,7 @@
           <b-progress-bar :value="value">
             <span>
               <strong
-                >{{ value.toFixed(2) }} / {{ max }} ({{
+                >{{ item.progress }} / {{ item.cost }} р. ({{
                   moneyCollectedPercent.toFixed(2)
                 }}%)</strong
               ></span
