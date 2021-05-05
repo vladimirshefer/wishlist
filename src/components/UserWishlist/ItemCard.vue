@@ -30,17 +30,21 @@
         <p>
           <b>{{ item.cost }} ₽</b>
         </p>
-        <b-progress :max="max" class="w-50 mt-2 mb-3" height="15px">
-          <b-progress-bar :value="value">
+        <b-progress
+          :title="moneyCollectedProgressString"
+          max="100"
+          class="w-50 mt-2 mb-3"
+          height="15px"
+        >
+          <b-progress-bar :value="moneyCollectedPercent">
             <span>
-              <strong
-                >{{ item.progress }} / {{ item.cost }} р. ({{
-                  moneyCollectedPercent.toFixed(2)
-                }}%)</strong
-              ></span
-            >
+              <strong> {{ moneyCollectedProgressString }} </strong>
+            </span>
           </b-progress-bar>
         </b-progress>
+        <b-tooltip target="tooltip-button-not-interactive" noninteractive
+          >Catch me if you can!</b-tooltip
+        >
         <div class="mb-2">
           <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag" />
         </div>
@@ -81,13 +85,6 @@ export default {
     item: { type: Object, required: true },
     editable: { type: Boolean, required: false, default: false },
   },
-  data() {
-    return {
-      value: (this.item.progress / this.item.cost) * 100,
-      max: 100,
-      moneyCollectedPercent: (this.item.progress / this.item.cost) * 100,
-    };
-  },
   methods: {
     tryRemove() {
       if (confirm("Удалить желание?")) {
@@ -99,11 +96,19 @@ export default {
     searchLink() {
       return "https://www.google.com/search?q=" + this.item.name; // TODO sanitize
     },
-    // progressValue() {
-    //   return {
-    //     value: (this.item.progress / this.item.cost) * 100,
-    //   };
-    // },
+    moneyCollectedPercent() {
+      return ((this.item.moneyCollected || 0) / this.item.cost) * 100;
+    },
+    moneyCollectedProgressString() {
+      return (
+        (this.item.moneyCollected || 0) +
+        " / " +
+        this.item.cost +
+        " p. (" +
+        this.moneyCollectedPercent.toFixed(2) +
+        "%)"
+      );
+    },
   },
 };
 </script>

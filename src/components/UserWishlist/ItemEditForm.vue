@@ -53,13 +53,13 @@
           ></b-form-input>
         </b-form-group>
         <b-form-group
-          id="input-group-progress"
+          id="input-group-money-collected"
           label="Сколько денег накоплено:"
-          label-for="input-progress"
+          label-for="input-money-collected"
         >
           <b-form-input
-            id="input-progress"
-            v-model="form.progress"
+            id="input-money-сollected"
+            v-model="form.moneyCollected"
             type="number"
             min="0"
             step="0.01"
@@ -136,7 +136,7 @@ export default {
         link: "",
         tags: [],
         description: "",
-        progress: 0,
+        moneyCollected: 0,
       },
       tag: "",
     };
