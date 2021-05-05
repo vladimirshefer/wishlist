@@ -33,7 +33,11 @@
         <b-progress :max="max" class="w-50 mt-2 mb-3" height="15px">
           <b-progress-bar :value="value">
             <span>
-              <strong>{{ value.toFixed(2) }} / {{ max }}</strong></span
+              <strong
+                >{{ value.toFixed(2) }} / {{ max }} ({{
+                  moneyCollectedPercent.toFixed(2)
+                }}%)</strong
+              ></span
             >
           </b-progress-bar>
         </b-progress>
@@ -81,6 +85,7 @@ export default {
     return {
       value: (this.item.progress / this.item.cost) * 100,
       max: 100,
+      moneyCollectedPercent: (this.item.progress / this.item.cost) * 100,
     };
   },
   methods: {
