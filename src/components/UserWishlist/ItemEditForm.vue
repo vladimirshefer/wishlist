@@ -12,24 +12,28 @@
             v-model="form.name"
             placeholder="Новая куртка"
             required
+            maxlength="80"
           ></b-form-input>
         </b-form-group>
 
         <b-form-group
-            id="input-group-description"
-            label="Комментарий"
-            label-for="input-description"
+          id="input-group-description"
+          label="Комментарий"
+          label-for="input-description"
         >
           <b-form-textarea
-              id="input-description"
-              v-model="form.description"
-              type="string"
-              size="sm"
-              placeholder="Мне это нужно для..."
-              rows="3"
-              max-rows="8"
+            id="input-description"
+            v-model="form.description"
+            type="string"
+            size="sm"
+            placeholder="Мне это нужно для..."
+            rows="3"
+            max-rows="8"
+            maxlength="160"
           ></b-form-textarea>
-          <small v-if="false" TODO class="text-muted">Попробуйте <b>#хештеги.</b></small>
+          <small v-if="false" TODO class="text-muted"
+            >Попробуйте <b>#хештеги.</b></small
+          >
         </b-form-group>
 
         <b-form-group
@@ -48,8 +52,21 @@
             required
           ></b-form-input>
         </b-form-group>
-
-
+        <b-form-group
+          id="input-group-money-collected"
+          label="Сколько денег накоплено:"
+          label-for="input-money-collected"
+        >
+          <b-form-input
+            id="input-money-сollected"
+            v-model="form.moneyCollected"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="10000.0"
+            required
+          ></b-form-input>
+        </b-form-group>
         <b-form-group
           id="input-group-link"
           label="Ссылка на товар:"
@@ -60,6 +77,7 @@
             v-model="form.link"
             type="url"
             placeholder="https://..."
+            maxlength="200"
           ></b-form-input>
         </b-form-group>
 
@@ -118,10 +136,21 @@ export default {
         link: "",
         tags: [],
         description: "",
+        moneyCollected: 0,
       },
       tag: "",
     };
   },
+  // computed: {
+  //   // progressStatus() {
+  //   //   return (this.progress / this.cost) * 100;
+  //   // },
+  //   // styleProgress() {
+  //   //   return {
+  //   //     width: this.progressStatus + "%",
+  //   //   };
+  //   // },
+  // },
   methods: {
     reset() {
       this.form = JSON.parse(JSON.stringify(this.item));

@@ -49,7 +49,7 @@ export default {
 }
 
 .footer .container {
-  border-top: 1px solid gray;
+  border-top: 1px solid #f0f0f0;
 }
 
 .footer-contents > * {

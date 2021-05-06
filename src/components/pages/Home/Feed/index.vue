@@ -6,7 +6,7 @@
 
 <script>
 import db from "@/db";
-import FeedItem from "@/components/pages/Home/FeedItem";
+import FeedItem from "@/components/pages/Home/Feed/FeedItem";
 import dayjs from "dayjs";
 
 export default {
