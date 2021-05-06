@@ -35,6 +35,18 @@
       <div>
         <b>{{ item.stored.cost }} ₽</b>
       </div>
+      <b-progress
+        :title="moneyCollectedProgressString"
+        max="100"
+        class="w-100 mt-2 mb-3"
+        height="15px"
+      >
+        <b-progress-bar :value="moneyCollectedPercent">
+          <span>
+            <strong> {{ moneyCollectedProgressString }} </strong>
+          </span>
+        </b-progress-bar>
+      </b-progress>
       <div class="mb-2">
         <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag" />
       </div>
@@ -132,6 +144,21 @@ export default {
     },
     textSizeClass() {
       return this.item.stored.name.length > 50 ? "" : "banner-text";
+    },
+    moneyCollectedPercent() {
+      return (
+        ((this.item.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
+      );
+    },
+    moneyCollectedProgressString() {
+      return (
+        (this.item.moneyCollected || 0) +
+        " / " +
+        this.item.stored.cost +
+        " p. (" +
+        this.moneyCollectedPercent.toFixed(2) +
+        "%)"
+      );
     },
   },
   methods: {

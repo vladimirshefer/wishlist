@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import StringUtils from "@/js/utils/StringUtils";
+
 export default {
   name: "TagBadge",
   props: {
@@ -22,7 +24,7 @@ export default {
   },
   computed: {
     hashcode() {
-      return Array.from(this.tag).map(it => it.charCodeAt(0)).reduce((a, b) => a + b * 2)
+      return StringUtils.hashcode(this.tag)
     },
     color() {
       return this.colors[this.hashcode % this.colors.length];

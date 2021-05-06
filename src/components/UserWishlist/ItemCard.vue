@@ -42,6 +42,9 @@
             </span>
           </b-progress-bar>
         </b-progress>
+        <b-tooltip target="tooltip-button-not-interactive" noninteractive
+          >Catch me if you can!</b-tooltip
+        >
         <div class="mb-2">
           <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag" />
         </div>
