@@ -64,7 +64,7 @@ export default {
   name: "Navbar",
   data() {
     return {
-      logoUrl: require('@/assets/logo.png'),
+      logoUrl: require('@/assets/logo.svg'),
     }
   },
   computed: {
