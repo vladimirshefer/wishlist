@@ -141,16 +141,6 @@ export default {
       tag: "",
     };
   },
-  // computed: {
-  //   // progressStatus() {
-  //   //   return (this.progress / this.cost) * 100;
-  //   // },
-  //   // styleProgress() {
-  //   //   return {
-  //   //     width: this.progressStatus + "%",
-  //   //   };
-  //   // },
-  // },
   methods: {
     reset() {
       this.form = JSON.parse(JSON.stringify(this.item));

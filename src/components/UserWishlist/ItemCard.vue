@@ -97,7 +97,7 @@ export default {
       return "https://www.google.com/search?q=" + this.item.name; // TODO sanitize
     },
     moneyCollectedPercent() {
-      return ((this.item.moneyCollected || 0) / this.item.cost) * 100;
+      return ((this.item.moneyCollected || 0) / this.item.cost) * 100 || 0;
     },
     moneyCollectedProgressString() {
       return (
