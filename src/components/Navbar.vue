@@ -4,7 +4,7 @@
 
     <router-link to="/" v-slot="{ href }" custom>
       <b-navbar-brand :href="href">
-        <b-avatar square variant="transparent" :src="logoUrl"/>
+        <b-avatar square variant="transparent" :src="logoUrl" size="1.5em"/>
         WishList
       </b-navbar-brand>
     </router-link>
