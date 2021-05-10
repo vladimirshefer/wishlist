@@ -52,7 +52,21 @@
             required
           ></b-form-input>
         </b-form-group>
-
+        <b-form-group
+          id="input-group-money-collected"
+          label="Сколько денег накоплено:"
+          label-for="input-money-collected"
+        >
+          <b-form-input
+            id="input-money-сollected"
+            v-model="form.moneyCollected"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="10000.0"
+            required
+          ></b-form-input>
+        </b-form-group>
         <b-form-group
           id="input-group-link"
           label="Ссылка на товар:"

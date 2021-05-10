@@ -5,20 +5,29 @@
         <router-link :to="'/user/' + item.stored.uid" v-slot="{ href }" custom>
           <a :href="href" class="mr-2">
             <template v-if="profile">
-              <b-avatar v-if="profile.photoURL" :src="profile.photoURL"
-                        size="sm" class="mr-1"/>
+              <b-avatar
+                v-if="profile.photoURL"
+                :src="profile.photoURL"
+                size="sm"
+                class="mr-1"
+              />
               {{ profile.displayName || "Anonymous" }}
             </template>
             <template v-else>
-              <b-avatar size="sm" text="?" class="mr-1"/>
+              <b-avatar size="sm" text="?" class="mr-1" />
               {{ "Anonymous" }}
             </template>
           </a>
         </router-link>
         <small class="text-muted">{{ createdAtStr }}</small>
       </div>
-      <div class="feed-item__title crop" :style="{background: backgroundColor}">
-        <h5 class="text-center" :class="textSizeClass">{{ item.stored.name }}</h5>
+      <div
+        class="feed-item__title crop"
+        :style="{ background: backgroundColor }"
+      >
+        <h5 class="text-center" :class="textSizeClass">
+          {{ item.stored.name }}
+        </h5>
       </div>
       <div>
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
@@ -26,8 +35,20 @@
       <div>
         <b>{{ item.stored.cost }} ₽</b>
       </div>
+      <b-progress
+        :title="moneyCollectedProgressString"
+        max="100"
+        class="w-100 mt-2 mb-3"
+        height="15px"
+      >
+        <b-progress-bar :value="moneyCollectedPercent">
+          <span>
+            <strong> {{ moneyCollectedProgressString }} </strong>
+          </span>
+        </b-progress-bar>
+      </b-progress>
       <div class="mb-2">
-        <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag"/>
+        <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag" />
       </div>
       <b-button
         v-if="item.stored.link"
@@ -38,7 +59,7 @@
         variant="primary"
       >
         Перейти в магазин
-        <b-icon icon="box-arrow-up-right"/>
+        <b-icon icon="box-arrow-up-right" />
       </b-button>
       <template v-if="user">
         <b-button
@@ -49,7 +70,7 @@
           variant="success"
           disabled
         >
-          <b-icon icon="folder-check"/>
+          <b-icon icon="folder-check" />
           {{ "Добавлено!" }}
         </b-button>
         <b-button
@@ -60,7 +81,7 @@
           variant="success"
           @click="addToMyList(item)"
         >
-          <b-icon icon="folder-plus"/>
+          <b-icon icon="folder-plus" />
           {{ "Тоже хочу!" }}
         </b-button>
       </template>
@@ -76,88 +97,105 @@ import profileService from "@/services/profileService";
 import StringUtils from "@/js/utils/StringUtils";
 
 export default {
-    name: "FeedItem",
-    components: {TagBadge},
-    props: {
-        item: {type: Object, required: true},
+  name: "FeedItem",
+  components: { TagBadge },
+  props: {
+    item: { type: Object, required: true },
+  },
+  data() {
+    return {
+      profile: null,
+      isAdded: false,
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-    data() {
-        return {
-            profile: null,
-            isAdded: false,
-        };
+    isMyItem() {
+      return this.item.stored.uid === this.user.uid;
     },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        },
-        isMyItem() {
-            return this.item.stored.uid === this.user.uid;
-        },
-        backgroundColor() {
-            let randomSeed = StringUtils.hashcode(this.item.stored.name)+13;
-            let pairs = [
-                "rgb(51, 102, 153), rgb(51, 170, 136)",
-                "rgb(51, 102, 153), rgb(136, 51, 170)",
-                "rgb(102, 51, 153), rgb(51, 136, 170)",
-                "rgb(102, 153, 51), rgb(51, 136, 170)",
-                "rgb(153, 51, 102), rgb(51, 136, 170)",
-                "rgb(153, 51, 102), rgb(170, 136, 51)",
-                "rgb(153, 102, 51), rgb(136, 51, 170)",
-            ]
-            let pair = pairs[randomSeed % pairs.length]
-            let angle = randomSeed % 360;
-            return `linear-gradient(${angle}deg, ${pair})`;
-        },
-        createdAtStr() {
-            let createdAt = this.item.createdAt;
-            let now = dayjs();
-            if (createdAt.year() !== now.year()) {
-                return createdAt.format("DD.MM.YYYY, hh:mm");
-            }
-            if (createdAt.date() !== now.date()) {
-                return createdAt.format("DD MMM, hh:mm");
-            } else {
-                return createdAt.format("hh:mm");
-            }
-        },
-        textSizeClass() {
-            return this.item.stored.name.length > 50 ? "" : "banner-text";
-        }
+    backgroundColor() {
+      let randomSeed = StringUtils.hashcode(this.item.stored.name) + 13;
+      let pairs = [
+        "rgb(51, 102, 153), rgb(51, 170, 136)",
+        "rgb(51, 102, 153), rgb(136, 51, 170)",
+        "rgb(102, 51, 153), rgb(51, 136, 170)",
+        "rgb(102, 153, 51), rgb(51, 136, 170)",
+        "rgb(153, 51, 102), rgb(51, 136, 170)",
+        "rgb(153, 51, 102), rgb(170, 136, 51)",
+        "rgb(153, 102, 51), rgb(136, 51, 170)",
+      ];
+      let pair = pairs[randomSeed % pairs.length];
+      let angle = randomSeed % 360;
+      return `linear-gradient(${angle}deg, ${pair})`;
     },
-    methods: {
-        addToMyList(item) {
-            if (this.isAdded) {
-                return;
-            }
+    createdAtStr() {
+      let createdAt = this.item.createdAt;
+      let now = dayjs();
+      if (createdAt.year() !== now.year()) {
+        return createdAt.format("DD.MM.YYYY, hh:mm");
+      }
+      if (createdAt.date() !== now.date()) {
+        return createdAt.format("DD MMM, hh:mm");
+      } else {
+        return createdAt.format("hh:mm");
+      }
+    },
+    textSizeClass() {
+      return this.item.stored.name.length > 50 ? "" : "banner-text";
+    },
+    moneyCollectedPercent() {
+      return (
+        ((this.item.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
+      );
+    },
+    moneyCollectedProgressString() {
+      return (
+        (this.item.moneyCollected || 0) +
+        " / " +
+        this.item.stored.cost +
+        " p. (" +
+        this.moneyCollectedPercent.toFixed(2) +
+        "%)"
+      );
+    },
+  },
+  methods: {
+    addToMyList(item) {
+      if (this.isAdded) {
+        return;
+      }
 
-            wishlistItemsService.create(item.stored)
-            this.isAdded = true;
-        },
+      wishlistItemsService.create(item.stored);
+      this.isAdded = true;
     },
-    async beforeMount() {
-        this.profile = await profileService.getUserProfileOrNull(this.item.stored.uid);
-    },
+  },
+  async beforeMount() {
+    this.profile = await profileService.getUserProfileOrNull(
+      this.item.stored.uid
+    );
+  },
 };
 </script>
 
 <style scoped>
 .feed-item__title {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .feed-item__title > h5 {
-    color: white;
+  color: white;
 }
 
 .banner-text {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .crop {
-    overflow: hidden;
+  overflow: hidden;
 }
 </style>
