@@ -11,6 +11,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "noImplicitAny": false,
+    "noEmit": true,
     "types": [
       "webpack-env"
     ],

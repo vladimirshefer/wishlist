@@ -9,12 +9,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import firebase from 'firebase/app'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import profileService from "@/services/profileService";
 
-export default {
+export default Vue.extend({
   name: 'App',
   components: {Footer, Navbar},
   data() {
@@ -48,7 +49,7 @@ export default {
       })
     })
   },
-}
+})
 </script>
 
 <style>
