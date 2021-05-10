@@ -5,26 +5,19 @@
         <router-link :to="'/user/' + item.stored.uid" v-slot="{ href }" custom>
           <a :href="href" class="mr-2">
             <template v-if="profile">
-              <b-avatar
-                v-if="profile.photoURL"
-                :src="profile.photoURL"
-                size="sm"
-                class="mr-1"
-              />
+              <b-avatar v-if="profile.photoURL" :src="profile.photoURL"
+                        size="sm" class="mr-1"/>
               {{ profile.displayName || "Anonymous" }}
             </template>
             <template v-else>
-              <b-avatar size="sm" text="?" class="mr-1" />
+              <b-avatar size="sm" text="?" class="mr-1"/>
               {{ "Anonymous" }}
             </template>
           </a>
         </router-link>
         <small class="text-muted">{{ createdAtStr }}</small>
       </div>
-      <div
-        class="feed-item__title crop"
-        :style="{ background: backgroundColor }"
-      >
+      <div class="feed-item__title crop" :style="{ background: backgroundColor }">
         <h5 class="text-center" :class="textSizeClass">
           {{ item.stored.name }}
         </h5>
@@ -48,7 +41,7 @@
         </b-progress-bar>
       </b-progress>
       <div class="mb-2">
-        <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag" />
+        <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag"/>
       </div>
       <b-button
         v-if="item.stored.link"
@@ -59,7 +52,7 @@
         variant="primary"
       >
         Перейти в магазин
-        <b-icon icon="box-arrow-up-right" />
+        <b-icon icon="box-arrow-up-right"/>
       </b-button>
       <template v-if="user">
         <b-button
@@ -70,7 +63,7 @@
           variant="success"
           disabled
         >
-          <b-icon icon="folder-check" />
+          <b-icon icon="folder-check"/>
           {{ "Добавлено!" }}
         </b-button>
         <b-button
@@ -81,7 +74,7 @@
           variant="success"
           @click="addToMyList(item)"
         >
-          <b-icon icon="folder-plus" />
+          <b-icon icon="folder-plus"/>
           {{ "Тоже хочу!" }}
         </b-button>
       </template>
@@ -91,16 +84,16 @@
 
 <script>
 import wishlistItemsService from "@/services/wishlistItemsService";
-import dayjs from "dayjs";
 import TagBadge from "@/components/TagBadge";
 import profileService from "@/services/profileService";
 import StringUtils from "@/js/utils/StringUtils";
+import dateUtils from "@/js/utils/DateUtils.ts";
 
 export default {
   name: "FeedItem",
-  components: { TagBadge },
+  components: {TagBadge},
   props: {
-    item: { type: Object, required: true },
+    item: {type: Object, required: true},
   },
   data() {
     return {
@@ -131,16 +124,7 @@ export default {
       return `linear-gradient(${angle}deg, ${pair})`;
     },
     createdAtStr() {
-      let createdAt = this.item.createdAt;
-      let now = dayjs();
-      if (createdAt.year() !== now.year()) {
-        return createdAt.format("DD.MM.YYYY, hh:mm");
-      }
-      if (createdAt.date() !== now.date()) {
-        return createdAt.format("DD MMM, hh:mm");
-      } else {
-        return createdAt.format("hh:mm");
-      }
+      return dateUtils.displayStringOf(this.item.createdAt)
     },
     textSizeClass() {
       return this.item.stored.name.length > 50 ? "" : "banner-text";
@@ -172,30 +156,28 @@ export default {
     },
   },
   async beforeMount() {
-    this.profile = await profileService.getUserProfileOrNull(
-      this.item.stored.uid
-    );
+    this.profile = await profileService.getUserProfileOrNull(this.item.stored.uid);
   },
 };
 </script>
 
 <style scoped>
 .feed-item__title {
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .feed-item__title > h5 {
-  color: white;
+    color: white;
 }
 
 .banner-text {
-  font-size: 40px;
+    font-size: 40px;
 }
 
 .crop {
-  overflow: hidden;
+    overflow: hidden;
 }
 </style>

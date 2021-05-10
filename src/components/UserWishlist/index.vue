@@ -54,7 +54,7 @@ export default {
     return {
       items: [],
       dataReady: false,
-      unsubscribe: function() {},
+      unsubscribe: function() {/* Stub */},
     };
   },
   methods: {
