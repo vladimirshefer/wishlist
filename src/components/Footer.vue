@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <div class="footer-contents">
+          <div class="footer-contents d-flex">
             <span>© 2021 Vladimir Shefer.</span>
             <a href="https://github.com/vladimirshefer/wishlist" target="_blank">
               GitHub
@@ -11,6 +11,13 @@
             <a href=" https://gitter.im/wishlist-app/community" target="_blank">
               Gitter
             </a>
+            <img 
+            class="ml-auto" 
+            :src="madeIn" 
+            width="70" 
+            height="30" 
+            alt="Made in Russia" 
+            />
           </div>
         </div>
       </div>
@@ -20,7 +27,12 @@
 
 <script>
 export default {
-  name: "Footer"
+  name: "Footer",
+data() { 
+    return { 
+    madeIn: require("@/assets/made-in-russia.svg"), 
+    }; 
+},
 }
 </script>
 
