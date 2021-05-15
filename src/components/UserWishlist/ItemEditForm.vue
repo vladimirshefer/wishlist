@@ -52,7 +52,16 @@
             required
           ></b-form-input>
         </b-form-group>
+            <b-form-checkbox
+             id="checkbox-1"
+             v-model="isMoneyCollectingEnabled"
+             name="checkbox-1"
+             value="accepted"
+            >
+            Показывать мои накопления
+    </b-form-checkbox>
         <b-form-group
+        v-show="isMoneyCollectingEnabled"
           id="input-group-money-collected"
           label="Сколько денег накоплено:"
           label-for="input-money-collected"
@@ -133,11 +142,14 @@ export default {
       form: {
         name: "",
         cost: 0,
+        moneyCollected: 0,
         link: "",
         tags: [],
         description: "",
       },
       tag: "",
+      status: 'not_accepted',
+      isMoneyCollectingEnabled: false
     };
   },
   methods: {

@@ -30,10 +30,13 @@
         <p>
           <b>{{ item.cost }} ₽</b>
         </p>
-        <b-progress
+        <b-button @click="visible=!visible" variant="outline-primary">Накоплено</b-button>
+        <div class="row">
+        <div class="col-12 col-lg-6">
+        <b-progress v-show="visible"
           :title="moneyCollectedProgressString"
           max="100"
-          class="w-50 mt-2 mb-3"
+          class="mt-2 mb-3"
           height="15px"
         >
           <b-progress-bar :value="moneyCollectedPercent">
@@ -42,10 +45,11 @@
             </span>
           </b-progress-bar>
         </b-progress>
+        </div>
+        </div>
         <div class="mb-2">
           <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag" />
         </div>
-
         <b-button
           v-if="item.link"
           :href="item.link"
@@ -82,6 +86,9 @@ export default {
     item: { type: Object, required: true },
     editable: { type: Boolean, required: false, default: false },
   },
+  data() {
+     return {visible: false}
+    },
   methods: {
     tryRemove() {
       if (confirm("Удалить желание?")) {
