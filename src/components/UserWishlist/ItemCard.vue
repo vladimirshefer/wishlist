@@ -28,12 +28,11 @@
           <p style="white-space: pre-line">{{ item.description }}</p>
         </div>
         <p>
-          <b>{{ item.cost }} ₽</b>
+        <b v-show="!item.isMoneyCollectingEnabled">{{ item.cost }} ₽</b>
         </p>
-        <b-button @click="visible=!visible" variant="outline-primary">Накоплено</b-button>
         <div class="row">
         <div class="col-12 col-lg-6">
-        <b-progress v-show="visible"
+        <b-progress v-show="item.isMoneyCollectingEnabled"
           :title="moneyCollectedProgressString"
           max="100"
           class="mt-2 mb-3"
@@ -86,9 +85,6 @@ export default {
     item: { type: Object, required: true },
     editable: { type: Boolean, required: false, default: false },
   },
-  data() {
-     return {visible: false}
-    },
   methods: {
     tryRemove() {
       if (confirm("Удалить желание?")) {
