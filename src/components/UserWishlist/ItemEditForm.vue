@@ -188,7 +188,13 @@ export default {
     this.reset();
   },
   isMoneyCollectingEnabledChoice(){
-    if (this.form.moneyCollected == false)
-     return !!this.form.isMoneyCollectingEnabled},
+    if (this.form.moneyCollected == false){
+        return !!this.form.isMoneyCollectingEnabled;
+    } else if (this.form.moneyCollected == true && this.form.isMoneyCollectingEnabled == false){
+        return !!this.form.isMoneyCollectingEnabled;
+    } else {
+        return !this.form.isMoneyCollectingEnabled;
+    }
+    },
 }
 </script>
