@@ -56,8 +56,6 @@
              id="checkbox-1"
              v-model="form.isMoneyCollectingEnabled"
              name="checkbox-1"
-             value="!(form.isMoneyCollectingEnabled)"
-             unchecked-value="form.isMoneyCollectingEnabled"
             >
             Показывать мои накопления
     </b-form-checkbox>
