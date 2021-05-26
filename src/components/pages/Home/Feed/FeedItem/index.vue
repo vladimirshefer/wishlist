@@ -26,9 +26,9 @@
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
       </div>
       <div>
-        <b>{{ item.stored.cost }} ₽</b>
+        <b v-show="!item.stored.isMoneyCollectedEnabled || !item.stored.moneyCollected">{{ item.stored.cost }} ₽</b>
       </div>
-      <b-progress
+      <b-progress v-show="item.stored.isMoneyCollectedEnabled"
         :title="moneyCollectedProgressString"
         max="100"
         class="w-100 mt-2 mb-3"

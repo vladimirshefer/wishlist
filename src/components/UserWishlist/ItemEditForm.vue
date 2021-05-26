@@ -52,7 +52,15 @@
             required
           ></b-form-input>
         </b-form-group>
+            <b-form-checkbox
+             id="checkbox-1"
+             v-model="form.isMoneyCollectingEnabled"
+             name="checkbox-1"
+            >
+            Показывать мои накопления
+    </b-form-checkbox>
         <b-form-group
+        v-show="form.isMoneyCollectingEnabled"
           id="input-group-money-collected"
           label="Сколько денег накоплено:"
           label-for="input-money-collected"
@@ -133,6 +141,8 @@ export default {
       form: {
         name: "",
         cost: 0,
+        moneyCollected: 0,
+        isMoneyCollectingEnabled: false,
         link: "",
         tags: [],
         description: "",
@@ -177,5 +187,5 @@ export default {
   created() {
     this.reset();
   },
-};
+}
 </script>
