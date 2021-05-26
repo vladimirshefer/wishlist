@@ -28,7 +28,7 @@
           <p style="white-space: pre-line">{{ item.description }}</p>
         </div>
         <p>
-        <b v-show="!item.isMoneyCollectingEnabled">{{ item.cost }} ₽</b>
+        <b v-show="!item.isMoneyCollectingEnabled || !item.moneyCollected">{{ item.cost }} ₽</b>
         </p>
         <div class="row">
         <div class="col-12 col-lg-6">
