@@ -145,11 +145,7 @@ export default {
       );
     },
     isMoneyCollectingCompleted() {
-        if (this.item.stored.moneyCollected >= this.item.stored.cost){
-            return true
-        } else{
-            return false
-        }
+        return this.item.stored.moneyCollected >= this.item.stored.cost
     }
   },
   methods: {

@@ -110,11 +110,7 @@ export default {
       );
     },
     isMoneyCollectingCompleted() {
-        if (this.item.moneyCollected >= this.item.cost){
-            return true
-        } else{
-            return false
-        }
+        return this.item.moneyCollected >= this.item.cost
     }
   },
 };
