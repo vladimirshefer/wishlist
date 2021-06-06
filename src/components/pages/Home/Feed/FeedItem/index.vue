@@ -26,15 +26,15 @@
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
       </div>
       <div>
-        <b v-show="!item.stored.isMoneyCollectedEnabled || !item.stored.moneyCollected">{{ item.stored.cost }} ₽</b>
+        <b v-show="!item.stored.isMoneyCollectingEnabled || !item.stored.moneyCollected">{{ item.stored.cost }} ₽</b>
       </div>
-      <b-progress v-show="item.stored.isMoneyCollectedEnabled"
+      <b-progress v-show="item.stored.isMoneyCollectingEnabled"
         :title="moneyCollectedProgressString"
         max="100"
         class="w-100 mt-2 mb-3"
         height="15px"
       >
-        <b-progress-bar :value="moneyCollectedPercent">
+        <b-progress-bar :value="moneyCollectedPercent" :variant="isMoneyCollectingCompleted?'danger':'primary'">
           <span>
             <strong> {{ moneyCollectedProgressString }} </strong>
           </span>
@@ -131,12 +131,12 @@ export default {
     },
     moneyCollectedPercent() {
       return (
-        ((this.item.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
+        ((this.item.stored.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
       );
     },
     moneyCollectedProgressString() {
       return (
-        (this.item.moneyCollected || 0) +
+        (this.item.stored.moneyCollected || 0) +
         " / " +
         this.item.stored.cost +
         " p. (" +
@@ -144,6 +144,9 @@ export default {
         "%)"
       );
     },
+    isMoneyCollectingCompleted() {
+        return this.item.stored.moneyCollected >= this.item.stored.cost
+    }
   },
   methods: {
     addToMyList(item) {

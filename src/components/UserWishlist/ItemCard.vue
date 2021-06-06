@@ -38,7 +38,7 @@
           class="mt-2 mb-3"
           height="15px"
         >
-          <b-progress-bar :value="moneyCollectedPercent">
+          <b-progress-bar :value="moneyCollectedPercent" :variant="isMoneyCollectingCompleted?'danger':'primary'">
             <span>
               <strong> {{ moneyCollectedProgressString }} </strong>
             </span>
@@ -109,6 +109,9 @@ export default {
         "%)"
       );
     },
+    isMoneyCollectingCompleted() {
+        return this.item.moneyCollected >= this.item.cost
+    }
   },
 };
 </script>
