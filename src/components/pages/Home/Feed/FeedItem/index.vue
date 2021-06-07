@@ -77,6 +77,17 @@
           <b-icon icon="folder-plus"/>
           {{ "Тоже хочу!" }}
         </b-button>
+        <b-button
+          class="mr-2"
+          v-show="item.stored.donatelink"
+          :href="item.stored.donatelink"
+          target="_blank"
+          size="sm"
+          variant="warning"
+        >
+          Пожертвовать
+          <b-icon icon="box-arrow-up-right" />
+        </b-button>
       </template>
     </div>
   </div>

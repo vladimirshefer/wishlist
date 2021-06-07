@@ -47,6 +47,17 @@
         <hr/>
         <div class="d-flex justify-content-between">
           <ItemCardOpenButton :name="item.name" :link="item.link"/>
+          <b-button
+            class="ml-2"
+            v-show="item.donatelink"
+            :href="item.donatelink"
+            target="_blank"
+            size="sm"
+            variant="warning"
+          >
+            Пожертвовать
+            <b-icon icon="box-arrow-up-right"/>
+          </b-button>
           <div>
             <span class="text-muted">{{ createdAtStr }}</span>
           </div>
