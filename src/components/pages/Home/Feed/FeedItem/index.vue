@@ -82,86 +82,91 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import wishlistItemsService from "@/services/wishlistItemsService";
-import TagBadge from "@/components/TagBadge";
+import TagBadge from "@/components/TagBadge.vue";
 import profileService from "@/services/profileService";
 import StringUtils from "@/js/utils/StringUtils";
-import dateUtils from "@/js/utils/DateUtils.ts";
+import dateUtils from "@/js/utils/DateUtils";
+import {Component, Prop, Vue} from "vue-property-decorator";
+import UserProfileEntity from "@/db/model/UserProfileEntity";
 
-export default {
+@Component<FeedItem>({
   name: "FeedItem",
   components: {TagBadge},
-  props: {
-    item: {type: Object, required: true},
+  async beforeMount(): Promise<void> {
+    this.profile = await profileService.getUserProfileOrNull((this.item as any)?.stored?.uid as string || "") as any;
   },
-  data() {
-    return {
-      profile: null,
-      isAdded: false,
-    };
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    isMyItem() {
-      return this.item.stored.uid === this.user.uid;
-    },
-    backgroundColor() {
-      let randomSeed = StringUtils.hashcode(this.item.stored.name) + 13;
-      let pairs = [
-        "rgb(51, 102, 153), rgb(51, 170, 136)",
-        "rgb(51, 102, 153), rgb(136, 51, 170)",
-        "rgb(102, 51, 153), rgb(51, 136, 170)",
-        "rgb(102, 153, 51), rgb(51, 136, 170)",
-        "rgb(153, 51, 102), rgb(51, 136, 170)",
-        "rgb(153, 51, 102), rgb(170, 136, 51)",
-        "rgb(153, 102, 51), rgb(136, 51, 170)",
-      ];
-      let pair = pairs[randomSeed % pairs.length];
-      let angle = randomSeed % 360;
-      return `linear-gradient(${angle}deg, ${pair})`;
-    },
-    createdAtStr() {
-      return dateUtils.displayStringOf(this.item.createdAt)
-    },
-    textSizeClass() {
-      return this.item.stored.name.length > 50 ? "" : "banner-text";
-    },
-    moneyCollectedPercent() {
-      return (
-        ((this.item.stored.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
-      );
-    },
-    moneyCollectedProgressString() {
-      return (
-        (this.item.stored.moneyCollected || 0) +
-        " / " +
-        this.item.stored.cost +
-        " p. (" +
-        this.moneyCollectedPercent.toFixed(2) +
-        "%)"
-      );
-    },
-    isMoneyCollectingCompleted() {
-        return this.item.stored.moneyCollected >= this.item.stored.cost
-    }
-  },
-  methods: {
-    addToMyList(item) {
-      if (this.isAdded) {
-        return;
-      }
+})
+export default class FeedItem extends Vue {
+  @Prop()
+  item: any | null
 
-      wishlistItemsService.create(item.stored);
-      this.isAdded = true;
-    },
-  },
-  async beforeMount() {
-    this.profile = await profileService.getUserProfileOrNull(this.item.stored.uid);
-  },
-};
+  profile: UserProfileEntity | null = null
+  isAdded: boolean = false
+
+  get user(): any {
+    return this.$store.state.user;
+  }
+
+  get isMyItem(): Boolean {
+    return this.item.stored.uid === this.user.uid;
+  }
+
+  get backgroundColor(): String {
+    let randomSeed = StringUtils.hashcode(this.item.stored.name) + 13;
+    let pairs = [
+      "rgb(51, 102, 153), rgb(51, 170, 136)",
+      "rgb(51, 102, 153), rgb(136, 51, 170)",
+      "rgb(102, 51, 153), rgb(51, 136, 170)",
+      "rgb(102, 153, 51), rgb(51, 136, 170)",
+      "rgb(153, 51, 102), rgb(51, 136, 170)",
+      "rgb(153, 51, 102), rgb(170, 136, 51)",
+      "rgb(153, 102, 51), rgb(136, 51, 170)",
+    ];
+    let pair = pairs[randomSeed % pairs.length];
+    let angle = randomSeed % 360;
+    return `linear-gradient(${angle}deg, ${pair})`;
+  }
+
+  get createdAtStr(): String {
+    return dateUtils.displayStringOf(this.item.createdAt)
+  }
+
+  get textSizeClass(): String {
+    return this.item.stored.name.length > 50 ? "" : "banner-text";
+  }
+
+  get moneyCollectedPercent() {
+    return (
+      ((this.item.stored.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
+    );
+  }
+
+  get moneyCollectedProgressString() {
+    return (
+      (this.item.stored.moneyCollected || 0) +
+      " / " +
+      this.item.stored.cost +
+      " p. (" +
+      this.moneyCollectedPercent.toFixed(2) +
+      "%)"
+    );
+  }
+
+  get isMoneyCollectingCompleted() {
+    return this.item.stored.moneyCollected >= this.item.stored.cost
+  }
+
+  addToMyList(item: any): void {
+    if (this.isAdded) {
+      return;
+    }
+
+    wishlistItemsService.create(item.stored);
+    this.isAdded = true;
+  }
+}
 </script>
 
 <style scoped>
