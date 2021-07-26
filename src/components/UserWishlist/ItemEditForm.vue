@@ -13,14 +13,10 @@
             placeholder="Новая куртка"
             required
             maxlength="80"
-          ></b-form-input>
+          />
         </b-form-group>
 
-        <b-form-group
-          id="input-group-description"
-          label="Комментарий"
-          label-for="input-description"
-        >
+        <b-form-group id="input-group-description" label="Комментарий" label-for="input-description">
           <b-form-textarea
             id="input-description"
             v-model="form.description"
@@ -30,18 +26,13 @@
             rows="3"
             max-rows="8"
             maxlength="160"
-          ></b-form-textarea>
-          <small v-if="false" TODO class="text-muted"
-            >Попробуйте <b>#хештеги.</b></small
-          >
+          />
+          <small v-if="false" TODO class="text-muted">
+            Попробуйте <b>#хештеги.</b>
+          </small>
         </b-form-group>
 
-        <b-form-group
-          id="input-group-cost"
-          label="Стоимость:"
-          label-for="input-cost"
-          description=""
-        >
+        <b-form-group id="input-group-cost" label="Стоимость:" label-for="input-cost" description="">
           <b-form-input
             id="input-cost"
             v-model="form.cost"
@@ -53,47 +44,41 @@
           ></b-form-input>
         </b-form-group>
             <b-form-checkbox
-             id="checkbox-1"
-             v-model="form.isMoneyCollectingEnabled"
-             name="checkbox-1"
+              id="show-collecting"
+              v-model="form.isMoneyCollectingEnabled"
+              name="show-collecting"
             >
-            Показывать мои накопления
-    </b-form-checkbox>
+              Показывать мои накопления
+            </b-form-checkbox>
         <b-form-group
-        v-show="form.isMoneyCollectingEnabled"
+          v-if="form.isMoneyCollectingEnabled"
           id="input-group-money-collected"
           label="Сколько денег накоплено:"
           label-for="input-money-collected"
         >
           <b-form-input
-            id="input-money-сollected"
+            id="input-money-collected"
             v-model="form.moneyCollected"
             type="number"
+            name="input-money-collected"
             min="0"
             step="0.01"
             placeholder="10000.0"
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-link"
-          label="Ссылка на товар:"
-          label-for="input-link"
-        >
+
+        <b-form-group id="input-group-link" label="Ссылка на товар:" label-for="input-link">
           <b-form-input
             id="input-link"
             v-model="form.link"
             type="url"
             placeholder="https://..."
             maxlength="200"
-          ></b-form-input>
+          />
         </b-form-group>
 
-        <b-form-group
-          id="input-group-tags"
-          label="Теги:"
-          label-for="input-tags"
-        >
+        <b-form-group id="input-group-tags" label="Теги:" label-for="input-tags">
           <div class="mb-2">
             <TagBadge
               v-for="tag in form.tags"
@@ -104,23 +89,19 @@
             />
           </div>
           <b-input-group>
-            <b-form-input
-              placeholder="Одежда"
-              v-model="tag"
-              @keydown.enter="addTag"
-            ></b-form-input>
-            <b-button variant="outline-primary" @click="addTag"
-              >Добавить</b-button
-            >
+            <b-form-input placeholder="Одежда" v-model="tag" @keydown.enter="addTag"/>
+            <b-button variant="outline-primary" @click="addTag">
+              Добавить
+            </b-button>
           </b-input-group>
         </b-form-group>
 
-        <b-button class="mr-1" type="submit" size="sm" variant="primary"
-          >Сохранить</b-button
-        >
-        <b-button class="mr-1" type="reset" size="sm" variant="danger"
-          >Отмена</b-button
-        >
+        <b-button class="mr-1" type="submit" size="sm" variant="primary">
+          Сохранить
+        </b-button>
+        <b-button class="mr-1" type="reset" size="sm" variant="danger">
+          Отмена
+        </b-button>
       </b-form>
     </div>
   </div>
