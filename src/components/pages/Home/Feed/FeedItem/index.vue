@@ -15,7 +15,11 @@
             </template>
           </a>
         </router-link>
-        <small class="text-muted">{{ createdAtStr }}</small>
+        <router-link :to="'/wish/' + item.id" v-slot="{ href }" custom>
+          <a :href="href">
+            <small class="text-muted">{{ createdAtStr }}</small>
+          </a>
+        </router-link>
       </div>
       <div class="feed-item__title crop" :style="{ background: backgroundColor }">
         <h5 class="text-center" :class="textSizeClass">
