@@ -21,11 +21,7 @@
           </a>
         </router-link>
       </div>
-      <div class="feed-item__title crop" :style="{ background: backgroundColor }">
-        <h5 class="text-center" :class="textSizeClass">
-          {{ item.stored.name }}
-        </h5>
-      </div>
+      <PseudoImage :text="item.stored.name"/>
       <div>
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
       </div>
@@ -90,14 +86,14 @@
 import wishlistItemsService from "@/services/wishlistItemsService";
 import TagBadge from "@/components/TagBadge.vue";
 import profileService from "@/services/profileService";
-import StringUtils from "@/js/utils/StringUtils";
 import dateUtils from "@/js/utils/DateUtils";
 import {Component, Prop, Vue} from "vue-property-decorator";
 import UserProfileEntity from "@/db/model/UserProfileEntity";
+import PseudoImage from "@/components/PseudoImage.vue";
 
 @Component<FeedItem>({
   name: "FeedItem",
-  components: {TagBadge},
+  components: {PseudoImage, TagBadge},
   async beforeMount(): Promise<void> {
     this.profile = await profileService.getUserProfileOrNull((this.item as any)?.stored?.uid as string || "") as any;
   },
@@ -117,28 +113,8 @@ export default class FeedItem extends Vue {
     return this.item.stored.uid === this.user.uid;
   }
 
-  get backgroundColor(): String {
-    let randomSeed = StringUtils.hashcode(this.item.stored.name) + 13;
-    let pairs = [
-      "rgb(51, 102, 153), rgb(51, 170, 136)",
-      "rgb(51, 102, 153), rgb(136, 51, 170)",
-      "rgb(102, 51, 153), rgb(51, 136, 170)",
-      "rgb(102, 153, 51), rgb(51, 136, 170)",
-      "rgb(153, 51, 102), rgb(51, 136, 170)",
-      "rgb(153, 51, 102), rgb(170, 136, 51)",
-      "rgb(153, 102, 51), rgb(136, 51, 170)",
-    ];
-    let pair = pairs[randomSeed % pairs.length];
-    let angle = randomSeed % 360;
-    return `linear-gradient(${angle}deg, ${pair})`;
-  }
-
   get createdAtStr(): String {
     return dateUtils.displayStringOf(this.item.createdAt)
-  }
-
-  get textSizeClass(): String {
-    return this.item.stored.name.length > 50 ? "" : "banner-text";
   }
 
   get moneyCollectedPercent() {
@@ -174,22 +150,5 @@ export default class FeedItem extends Vue {
 </script>
 
 <style scoped>
-.feed-item__title {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.feed-item__title > h5 {
-    color: white;
-}
-
-.banner-text {
-    font-size: 40px;
-}
-
-.crop {
-    overflow: hidden;
-}
 </style>

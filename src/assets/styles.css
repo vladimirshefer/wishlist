@@ -1,0 +1,14 @@
+.feed-item__title {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feed-item__title > h5 {
+    color: white;
+}
+
+.crop {
+    overflow: hidden;
+}
