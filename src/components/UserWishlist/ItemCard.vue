@@ -45,7 +45,12 @@
           <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag"/>
         </div>
         <hr/>
-        <ItemCardOpenButton :name="item.name" :link="item.link"/>
+        <div class="d-flex justify-content-between">
+          <ItemCardOpenButton :name="item.name" :link="item.link"/>
+          <div>
+            <span class="text-muted">{{ createdAtStr }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,6 +59,8 @@
 <script>
 import TagBadge from "@/components/TagBadge";
 import ItemCardOpenButton from "@/components/UserWishlist/ItemCardOpenButton";
+import dateUtils from "@/js/utils/DateUtils";
+import dayjs from "dayjs";
 
 export default {
   name: "ItemCard",
@@ -85,6 +92,9 @@ export default {
     },
     isMoneyCollectingCompleted() {
       return this.item.moneyCollected?.doubleValue >= this.item.cost?.doubleValue
+    },
+    createdAtStr() {
+      return dateUtils.displayStringOf(this.item.createdAt ? dayjs(new Date(this.item.createdAt.seconds * 1000)) : null)
     }
   },
 };
