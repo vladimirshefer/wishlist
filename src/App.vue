@@ -53,10 +53,6 @@ export default Vue.extend({
 </script>
 
 <style>
-.row {
-  margin-top: 10px;
-}
-
 html {
   position: relative;
   min-height: 100%;
