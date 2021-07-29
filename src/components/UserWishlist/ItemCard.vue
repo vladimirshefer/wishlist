@@ -2,18 +2,8 @@
   <div class="card">
     <div class="card-body">
       <div class="wishlist-item-card">
-        <div
-          class="container-title"
-          style="display: flex; align-items: flex-start"
-        >
-          <h5
-            class="card-title"
-            style="
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            "
-          >
+        <div class="container-title" style="display: flex; align-items: flex-start">
+          <h5 class="card-title" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">
             {{ item.name }}
           </h5>
 
@@ -28,26 +18,26 @@
           <p style="white-space: pre-line">{{ item.description }}</p>
         </div>
         <p>
-        <b v-show="!item.isMoneyCollectingEnabled || !item.moneyCollected">{{ item.cost }} ₽</b>
+          <b v-show="!item.isMoneyCollectingEnabled || !item.moneyCollected">{{ item.cost }} ₽</b>
         </p>
         <div class="row">
-        <div class="col-12 col-lg-6">
-        <b-progress v-show="item.isMoneyCollectingEnabled"
-          :title="moneyCollectedProgressString"
-          max="100"
-          class="mt-2 mb-3"
-          height="15px"
-        >
-          <b-progress-bar :value="moneyCollectedPercent" :variant="isMoneyCollectingCompleted?'danger':'primary'">
+          <div class="col-12 col-lg-6">
+            <b-progress v-show="item.isMoneyCollectingEnabled"
+              :title="moneyCollectedProgressString"
+              max="100"
+              class="mt-2 mb-3"
+              height="15px"
+            >
+              <b-progress-bar :value="moneyCollectedPercent" :variant="isMoneyCollectingCompleted?'danger':'primary'">
             <span>
               <strong> {{ moneyCollectedProgressString }} </strong>
             </span>
-          </b-progress-bar>
-        </b-progress>
-        </div>
+              </b-progress-bar>
+            </b-progress>
+          </div>
         </div>
         <div class="mb-2">
-          <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag" />
+          <TagBadge v-for="tag in item.tags" :key="tag" :tag="tag"/>
         </div>
         <b-button
           v-if="item.link"
@@ -57,7 +47,7 @@
           variant="primary"
         >
           Открыть
-          <b-icon icon="box-arrow-up-right" />
+          <b-icon icon="box-arrow-up-right"/>
         </b-button>
 
         <b-button
@@ -67,7 +57,7 @@
           size="sm"
           variant="primary"
         >
-          <b-icon icon="google" />
+          <b-icon icon="google"/>
           Поиск
         </b-button>
       </div>
@@ -80,10 +70,10 @@ import TagBadge from "@/components/TagBadge";
 
 export default {
   name: "ItemCard",
-  components: { TagBadge },
+  components: {TagBadge},
   props: {
-    item: { type: Object, required: true },
-    editable: { type: Boolean, required: false, default: false },
+    item: {type: Object, required: true},
+    editable: {type: Boolean, required: false, default: false},
   },
   methods: {
     tryRemove() {
@@ -110,7 +100,7 @@ export default {
       );
     },
     isMoneyCollectingCompleted() {
-        return this.item.moneyCollected >= this.item.cost
+      return this.item.moneyCollected >= this.item.cost
     }
   },
 };
