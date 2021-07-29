@@ -56,48 +56,55 @@
   </div>
 </template>
 
-<script>
-import TagBadge from "@/components/TagBadge";
-import ItemCardOpenButton from "@/components/UserWishlist/ItemCardOpenButton";
+<script lang="ts">
+import TagBadge from "@/components/TagBadge.vue";
+import ItemCardOpenButton from "@/components/UserWishlist/ItemCardOpenButton.vue";
 import dateUtils from "@/js/utils/DateUtils";
 import dayjs from "dayjs";
+import {Component, Prop, Vue} from "vue-property-decorator";
 
-export default {
+@Component<ItemCard>({
   name: "ItemCard",
-  components: {ItemCardOpenButton, TagBadge},
-  props: {
-    item: {type: Object, required: true},
-    editable: {type: Boolean, required: false, default: false},
-  },
-  methods: {
-    tryRemove() {
-      if (confirm("Удалить желание?")) {
-        this.$emit("remove");
-      }
-    },
-  },
-  computed: {
-    moneyCollectedPercent() {
-      return ((this.item.moneyCollected || 0) / this.item.cost) * 100 || 0;
-    },
-    moneyCollectedProgressString() {
-      return (
-        (this.item.moneyCollected || 0) +
-        " / " +
-        this.item.cost +
-        " p. (" +
-        this.moneyCollectedPercent.toFixed(2) +
-        "%)"
-      );
-    },
-    isMoneyCollectingCompleted() {
-      return this.item.moneyCollected?.doubleValue >= this.item.cost?.doubleValue
-    },
-    createdAtStr() {
-      return dateUtils.displayStringOf(this.item.createdAt ? dayjs(new Date(this.item.createdAt.seconds * 1000)) : null)
+  components: {TagBadge, ItemCardOpenButton}
+})
+export default class ItemCard extends Vue {
+  @Prop()
+  item: any | null
+  @Prop()
+  editable!: boolean
+
+  tryRemove() {
+    if (confirm("Удалить желание?")) {
+      this.$emit("remove");
     }
-  },
-};
+  }
+
+  get moneyCollectedPercent() {
+    return ((this.item.moneyCollected || 0) / this.item.cost) * 100 || 0;
+  }
+
+  get moneyCollectedProgressString() {
+    return (
+      (this.item.moneyCollected || 0) +
+      " / " +
+      this.item.cost +
+      " p. (" +
+      this.moneyCollectedPercent.toFixed(2) +
+      "%)"
+    );
+  }
+
+  get isMoneyCollectingCompleted() {
+    return this.item.moneyCollected?.doubleValue >= this.item.cost?.doubleValue
+  }
+
+  get createdAtStr() {
+    let date = this.item.createdAt ? dayjs(new Date(this.item.createdAt.seconds * 1000)) : null;
+    if (!date) return "";
+    return dateUtils.displayStringOf(date)
+  }
+
+}
 </script>
 
 <style>
