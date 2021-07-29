@@ -1,13 +1,16 @@
 <template>
   <div class="row">
-    <div class="col-12 mb-2">
+    <div class="col-12 mb-3">
       <a :href="authorUrl">
         <b-avatar size="1.5em" :src="authorPhotoUrl" class="mr-1"/>
         <b class="mr-2">{{ authorName }}</b>
       </a>
       <small class="text-muted">{{ createdAtStr }}</small>
     </div>
-    <div class="col-12">
+    <div class="col-sm-12 col-lg-4 mb-sm-2 mb-lg-0">
+      <PseudoImage :text="wish.name"/>
+    </div>
+    <div class="col-sm-12 col-lg-8">
       <div class="row">
         <div class="col-8">
           <h5>{{ wish.name }} </h5>
@@ -28,9 +31,11 @@ import dateUtils from "@/js/utils/DateUtils";
 import dayjs from "dayjs";
 import WishlistItemEntity from "@/db/model/WishlistItemEntity";
 import {Component, Vue} from "vue-property-decorator";
+import PseudoImage from "@/components/PseudoImage.vue";
 
 @Component<WishPage>({
   name: "WishPage",
+  components: {PseudoImage},
   watch: {
     async wishId() {
       await this.init();
