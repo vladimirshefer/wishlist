@@ -28,11 +28,11 @@
 <script>
 export default {
   name: "Footer",
-data() { 
-    return { 
-    madeIn: require("@/assets/made-in-russia.svg"), 
-    }; 
-},
+  data() {
+    return {
+      madeIn: require("@/assets/made-in-russia.svg"),
+    };
+  },
 }
 </script>
 
