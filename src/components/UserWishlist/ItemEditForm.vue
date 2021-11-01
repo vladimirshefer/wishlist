@@ -77,6 +77,19 @@
             maxlength="200"
           />
         </b-form-group>
+        <b-form-group
+          id="input-group-donatelink"
+          label="Ссылка для пожертвований (Яндекс Деньги, ЮMoney, PayPal или другой ресурс):"
+          label-for="input-donatelink"
+        >
+          <b-form-input
+            id="input-donatelink"
+            v-model="form.donatelink"
+            type="url"
+            placeholder="https://..."
+            maxlength="200"
+          ></b-form-input>
+        </b-form-group>
 
         <b-form-group id="input-group-tags" label="Теги:" label-for="input-tags">
           <div class="mb-2">
@@ -125,6 +138,7 @@ export default {
         moneyCollected: 0,
         isMoneyCollectingEnabled: false,
         link: "",
+        donatelink: "",
         tags: [],
         description: "",
       },

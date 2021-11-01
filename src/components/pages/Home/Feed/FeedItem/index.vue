@@ -26,20 +26,11 @@
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
       </div>
       <div>
-        <b v-show="!item.stored.isMoneyCollectingEnabled || !item.stored.moneyCollected">{{ item.stored.cost }} ₽</b>
+        <b v-show="!item.stored.isMoneyCollectingEnabled">{{ item.stored.cost }} ₽</b>
+        <ProgressBar v-show="item.stored.isMoneyCollectingEnabled"
+          :max="item.stored.cost" :value="item.stored.moneyCollected" suffix="P."
+        />
       </div>
-      <b-progress v-show="item.stored.isMoneyCollectingEnabled"
-        :title="moneyCollectedProgressString"
-        max="100"
-        class="w-100 mt-2 mb-3"
-        height="15px"
-      >
-        <b-progress-bar :value="moneyCollectedPercent" :variant="isMoneyCollectingCompleted?'danger':'primary'">
-          <span>
-            <strong> {{ moneyCollectedProgressString }} </strong>
-          </span>
-        </b-progress-bar>
-      </b-progress>
       <div class="mb-2">
         <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag"/>
       </div>
@@ -77,6 +68,17 @@
           <b-icon icon="folder-plus"/>
           {{ "Тоже хочу!" }}
         </b-button>
+        <b-button
+          class="mr-2"
+          v-show="item.stored.donatelink"
+          :href="item.stored.donatelink"
+          target="_blank"
+          size="sm"
+          variant="warning"
+        >
+          Пожертвовать
+          <b-icon icon="box-arrow-up-right" />
+        </b-button>
       </template>
     </div>
   </div>
@@ -90,10 +92,11 @@ import dateUtils from "@/js/utils/DateUtils";
 import {Component, Prop, Vue} from "vue-property-decorator";
 import UserProfileEntity from "@/db/model/UserProfileEntity";
 import PseudoImage from "@/components/PseudoImage.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
 
 @Component<FeedItem>({
   name: "FeedItem",
-  components: {PseudoImage, TagBadge},
+  components: {ProgressBar, PseudoImage, TagBadge},
   async beforeMount(): Promise<void> {
     this.profile = await profileService.getUserProfileOrNull((this.item as any)?.stored?.uid as string || "") as any;
   },
@@ -115,27 +118,6 @@ export default class FeedItem extends Vue {
 
   get createdAtStr(): String {
     return dateUtils.displayStringOf(this.item.createdAt)
-  }
-
-  get moneyCollectedPercent() {
-    return (
-      ((this.item.stored.moneyCollected || 0) / this.item.stored.cost) * 100 || 0
-    );
-  }
-
-  get moneyCollectedProgressString() {
-    return (
-      (this.item.stored.moneyCollected || 0) +
-      " / " +
-      this.item.stored.cost +
-      " p. (" +
-      this.moneyCollectedPercent.toFixed(2) +
-      "%)"
-    );
-  }
-
-  get isMoneyCollectingCompleted() {
-    return this.item.stored.moneyCollected >= this.item.stored.cost
   }
 
   addToMyList(item: any): void {
