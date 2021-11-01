@@ -14,7 +14,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <router-link v-if="user" :to="'/user/' + user.uid"
-                     v-slot="{href}" custom>
+          v-slot="{href}" custom>
           <b-nav-item :href="href">
             <b-icon icon="house-door"/>
             <span class="ml-1">Мои желания</span>
@@ -68,10 +68,10 @@ export default {
     }
   },
   computed: {
-    user(){
+    user() {
       return this.$store.state.user
     },
-    profile(){
+    profile() {
       return this.$store.state.profile || {}
     }
   },
