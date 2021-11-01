@@ -49,12 +49,9 @@
           <div class="d-flex">
             <ItemCardOpenButton :name="item.name" :link="item.link"/>
             <b-button
-              class="ml-2"
               v-show="item.donatelink"
               :href="item.donatelink"
-              target="_blank"
-              size="sm"
-              variant="warning"
+              class="ml-2" target="_blank" size="sm" variant="warning"
             >
               Пожертвовать
               <b-icon icon="box-arrow-up-right"/>
