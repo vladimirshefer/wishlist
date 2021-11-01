@@ -119,8 +119,8 @@ export default class ItemCard extends Vue {
 
 <style>
 .overflow-trimmed {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
