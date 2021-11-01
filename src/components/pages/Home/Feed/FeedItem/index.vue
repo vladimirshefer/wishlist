@@ -146,7 +146,7 @@ export default class FeedItem extends Vue {
   }
 
   get isMoneyCollectingCompleted() {
-    return this.item.stored.moneyCollected >= this.item.stored.cost
+    return this.item.stored.moneyCollected?.doubleValue >= this.item.stored.cost?.doubleValue
   }
 
   addToMyList(item: any): void {
