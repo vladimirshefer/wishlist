@@ -26,19 +26,14 @@
         <div>
           <p style="white-space: pre-line">{{ item.description }}</p>
         </div>
-        <div class="row position-relative mt-2 mb-3">
+        <div v-show="item.isMoneyCollectingEnabled"
+          class="row position-relative mt-2 mb-3">
           <div class="col-12 col-lg-6">
-            <b-progress v-show="item.isMoneyCollectingEnabled"
-              :title="moneyCollectedProgressString"
-              max="100"
-              height="15px"
-            >
-              <b-progress-bar :value="moneyCollectedPercent" :variant="isMoneyCollectingCompleted?'danger':'primary'">
-                <span>
-                  <strong> {{ moneyCollectedProgressString }} </strong>
-                </span>
-              </b-progress-bar>
-            </b-progress>
+            <ProgressBar
+              :max="item.cost"
+              :value="item.moneyCollected"
+              suffix="P."
+            />
           </div>
         </div>
         <div class="mb-2">
@@ -72,10 +67,11 @@ import ItemCardOpenButton from "@/components/UserWishlist/ItemCardOpenButton.vue
 import dateUtils from "@/js/utils/DateUtils";
 import dayjs from "dayjs";
 import {Component, Prop, Vue} from "vue-property-decorator";
+import ProgressBar from "@/components/ProgressBar.vue";
 
 @Component<ItemCard>({
   name: "ItemCard",
-  components: {TagBadge, ItemCardOpenButton}
+  components: {ProgressBar, TagBadge, ItemCardOpenButton}
 })
 export default class ItemCard extends Vue {
   @Prop()
@@ -87,25 +83,6 @@ export default class ItemCard extends Vue {
     if (confirm("Удалить желание?")) {
       this.$emit("remove");
     }
-  }
-
-  get moneyCollectedPercent() {
-    return ((this.item.moneyCollected || 0) / this.item.cost) * 100 || 0;
-  }
-
-  get moneyCollectedProgressString() {
-    return (
-      (this.item.moneyCollected || 0) +
-      " / " +
-      this.item.cost +
-      " p. (" +
-      this.moneyCollectedPercent.toFixed(2) +
-      "%)"
-    );
-  }
-
-  get isMoneyCollectingCompleted() {
-    return this.item.moneyCollected?.doubleValue >= this.item.cost?.doubleValue
   }
 
   get createdAtStr() {
