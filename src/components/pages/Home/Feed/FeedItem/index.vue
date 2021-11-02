@@ -79,6 +79,7 @@
           Пожертвовать
           <b-icon icon="box-arrow-up-right" />
         </b-button>
+        <ImageButton :name="item.stored.name" :link="item.stored.imagelink"/>
       </template>
     </div>
   </div>
@@ -93,10 +94,11 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 import UserProfileEntity from "@/db/model/UserProfileEntity";
 import PseudoImage from "@/components/PseudoImage.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
+import ImageButton from "@/components/ImageButton.vue";
 
 @Component<FeedItem>({
   name: "FeedItem",
-  components: {ProgressBar, PseudoImage, TagBadge},
+  components: { ProgressBar, PseudoImage, TagBadge, ImageButton },
   async beforeMount(): Promise<void> {
     this.profile = await profileService.getUserProfileOrNull((this.item as any)?.stored?.uid as string || "") as any;
   },
