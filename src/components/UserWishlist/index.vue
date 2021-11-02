@@ -22,12 +22,18 @@
       </b-overlay>
     </div>
     <div class="col-12" v-for="item in items" :key="item.name">
-      <ItemCardWrapper
-        :item="item"
-        :editable="editable"
-        @remove="removeWishlistItem(item.id)"
-        @update="editItem($event)"
-      />
+      <div class="row">
+        <div class="col-0 col-lg-1 col-xl-2"/>
+        <div class="col-12 col-lg-10 col-xl-8">
+          <ItemCardWrapper
+            :item="item"
+            :editable="editable"
+            @remove="removeWishlistItem(item.id)"
+            @update="editItem($event)"
+          />
+        </div>
+        <div class="col-0 col-lg-1 col-xl-2"/>
+      </div>
     </div>
   </div>
 </template>
