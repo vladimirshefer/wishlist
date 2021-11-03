@@ -21,7 +21,10 @@
           </a>
         </router-link>
       </div>
-      <PseudoImage :text="item.stored.name"/>
+      <div v-if="item.stored.imagelink" class="img-link">
+        <b-img fluid :src="`${item.stored.imagelink}`" :alt="`${item.stored.name}`" ></b-img>
+      </div>
+      <PseudoImage v-else :text="item.stored.name" />
       <div>
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
       </div>
@@ -79,7 +82,6 @@
           Пожертвовать
           <b-icon icon="box-arrow-up-right" />
         </b-button>
-        <ImageButton :link="item.stored.imagelink"/>
       </template>
     </div>
   </div>
@@ -94,11 +96,10 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 import UserProfileEntity from "@/db/model/UserProfileEntity";
 import PseudoImage from "@/components/PseudoImage.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
-import ImageButton from "@/components/ImageButton.vue";
 
 @Component<FeedItem>({
   name: "FeedItem",
-  components: { ProgressBar, PseudoImage, TagBadge, ImageButton },
+  components: { ProgressBar, PseudoImage, TagBadge },
   async beforeMount(): Promise<void> {
     this.profile = await profileService.getUserProfileOrNull((this.item as any)?.stored?.uid as string || "") as any;
   },
@@ -134,5 +135,8 @@ export default class FeedItem extends Vue {
 </script>
 
 <style scoped>
-
+.img-link{
+  max-height: 300px;
+  overflow: hidden;
+}
 </style>
