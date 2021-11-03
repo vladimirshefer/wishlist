@@ -79,7 +79,7 @@
           Пожертвовать
           <b-icon icon="box-arrow-up-right" />
         </b-button>
-        <ImageButton :name="item.stored.name" :link="item.stored.imagelink"/>
+        <ImageButton :link="item.stored.imagelink"/>
       </template>
     </div>
   </div>

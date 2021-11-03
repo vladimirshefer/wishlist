@@ -43,7 +43,7 @@
         <div class="d-flex justify-content-between">
           <div class="d-flex">
             <ItemCardOpenButton :name="item.name" :link="item.link"/>
-            <ImageButton :name="item.name" :link="item.imageLink"/>
+            <ImageButton :link="item.imageLink"/>
             <b-button
               v-show="item.donatelink"
               :href="item.donatelink"
