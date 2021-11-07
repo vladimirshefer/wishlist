@@ -43,7 +43,7 @@
         <div class="d-flex justify-content-between">
           <div class="d-flex">
             <ItemCardOpenButton :name="item.name" :link="item.link"/>
-            <ImageButton :link="item.imageLink"/>
+            <OpenImageButton :link="item.imageLink"/>
             <b-button
               v-show="item.donatelink"
               :href="item.donatelink"
@@ -65,7 +65,7 @@
 <script lang="ts">
 import TagBadge from "@/components/TagBadge.vue";
 import ItemCardOpenButton from "@/components/UserWishlist/ItemCardOpenButton.vue";
-import ImageButton from "@/components/ImageButton.vue";
+import OpenImageButton from "@/components/OpenImageButton.vue";
 import dateUtils from "@/js/utils/DateUtils";
 import dayjs from "dayjs";
 import {Component, Prop, Vue} from "vue-property-decorator";
@@ -73,7 +73,7 @@ import ProgressBar from "@/components/ProgressBar.vue";
 
 @Component<ItemCard>({
   name: "ItemCard",
-  components: { ProgressBar, TagBadge, ItemCardOpenButton, ImageButton }
+  components: { ProgressBar, TagBadge, ItemCardOpenButton, OpenImageButton }
 })
 export default class ItemCard extends Vue {
   @Prop()

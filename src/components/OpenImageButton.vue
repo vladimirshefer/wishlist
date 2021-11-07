@@ -16,18 +16,15 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 
-@Component<ImageButton>({
-  name: "ImageButton"
+@Component<OpenImageButton>({
+  name: "OpenImageButton"
 })
-export default class ImageButton extends Vue {
-  @Prop()
-  name!: string
-
+export default class OpenImageButton extends Vue {
   @Prop()
   link!: string | null
 
   get imageLink() {
-    return this.link // TODO sanitize
+    return this.link
   }
 }
 </script>
