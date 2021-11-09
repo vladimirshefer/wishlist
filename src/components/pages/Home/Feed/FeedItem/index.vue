@@ -22,7 +22,7 @@
         </router-link>
       </div>
       <div v-if="item.stored.imagelink" class="img-link">
-        <b-img fluid :src="`${item.stored.imagelink}`" :alt="`${item.stored.name}`" ></b-img>
+        <b-img :src="`${item.stored.imagelink}`" :alt="`${item.stored.name}`" class="img" ></b-img>
       </div>
       <PseudoImage v-else :text="item.stored.name" />
       <div>
@@ -135,8 +135,4 @@ export default class FeedItem extends Vue {
 </script>
 
 <style scoped>
-.img-link{
-  max-height: 300px;
-  overflow: hidden;
-}
 </style>
