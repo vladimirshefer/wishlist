@@ -93,7 +93,7 @@
         >
           <b-form-input
             id="input-donatelink"
-            v-model="form.donatelink"
+            v-model="form.donateLink"
             type="url"
             placeholder="https://..."
             maxlength="200"
@@ -147,8 +147,8 @@ export default {
         moneyCollected: 0,
         isMoneyCollectingEnabled: false,
         link: "",
-        donatelink: "",
-        imagelink: "",
+        donateLink: "",
+        imageLink: "",
         tags: [],
         description: "",
       },
