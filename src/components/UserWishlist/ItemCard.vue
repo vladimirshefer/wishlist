@@ -71,7 +71,7 @@ import ProgressBar from "@/components/ProgressBar.vue";
 
 @Component<ItemCard>({
   name: "ItemCard",
-  components: { ProgressBar, TagBadge, ItemCardOpenButton }
+  components: {ProgressBar, TagBadge, ItemCardOpenButton}
 })
 export default class ItemCard extends Vue {
   @Prop()
