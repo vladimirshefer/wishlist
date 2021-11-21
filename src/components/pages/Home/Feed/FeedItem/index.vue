@@ -145,9 +145,4 @@ export default class FeedItem extends Vue {
 }
 </script>
 
-<<<<<<< HEAD
-<style scoped>
-</style>
-=======
 <style scoped></style>
->>>>>>> master
