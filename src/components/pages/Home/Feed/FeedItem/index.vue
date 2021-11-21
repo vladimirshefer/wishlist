@@ -5,12 +5,16 @@
         <router-link :to="'/user/' + item.stored.uid" v-slot="{ href }" custom>
           <a :href="href" class="mr-2">
             <template v-if="profile">
-              <b-avatar v-if="profile.photoURL" :src="profile.photoURL"
-                        size="sm" class="mr-1"/>
+              <b-avatar
+                v-if="profile.photoURL"
+                :src="profile.avatarUrl ? profile.avatarUrl : profile.photoURL"
+                size="sm"
+                class="mr-1"
+              />
               {{ profile.displayName || "Anonymous" }}
             </template>
             <template v-else>
-              <b-avatar size="sm" text="?" class="mr-1"/>
+              <b-avatar size="sm" text="?" class="mr-1" />
               {{ "Anonymous" }}
             </template>
           </a>
@@ -29,13 +33,18 @@
         <p style="white-space: pre-line">{{ item.stored.description }}</p>
       </div>
       <div>
-        <b v-show="!item.stored.isMoneyCollectingEnabled">{{ item.stored.cost }} ₽</b>
-        <ProgressBar v-show="item.stored.isMoneyCollectingEnabled"
-          :max="item.stored.cost" :value="item.stored.moneyCollected" suffix="P."
+        <b v-show="!item.stored.isMoneyCollectingEnabled"
+          >{{ item.stored.cost }} ₽</b
+        >
+        <ProgressBar
+          v-show="item.stored.isMoneyCollectingEnabled"
+          :max="item.stored.cost"
+          :value="item.stored.moneyCollected"
+          suffix="P."
         />
       </div>
       <div class="mb-2">
-        <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag"/>
+        <TagBadge v-for="tag in item.stored.tags" :key="tag" :tag="tag" />
       </div>
       <b-button
         v-if="item.stored.link"
@@ -46,7 +55,7 @@
         variant="primary"
       >
         Перейти в магазин
-        <b-icon icon="box-arrow-up-right"/>
+        <b-icon icon="box-arrow-up-right" />
       </b-button>
       <template v-if="user">
         <b-button
@@ -57,7 +66,7 @@
           variant="success"
           disabled
         >
-          <b-icon icon="folder-check"/>
+          <b-icon icon="folder-check" />
           {{ "Добавлено!" }}
         </b-button>
         <b-button
@@ -68,7 +77,7 @@
           variant="success"
           @click="addToMyList(item)"
         >
-          <b-icon icon="folder-plus"/>
+          <b-icon icon="folder-plus" />
           {{ "Тоже хочу!" }}
         </b-button>
         <b-button
@@ -88,20 +97,22 @@
 </template>
 
 <script lang="ts">
-import wishlistItemsService from "@/services/wishlistItemsService";
-import TagBadge from "@/components/TagBadge.vue";
-import profileService from "@/services/profileService";
-import dateUtils from "@/js/utils/DateUtils";
-import {Component, Prop, Vue} from "vue-property-decorator";
-import UserProfileEntity from "@/db/model/UserProfileEntity";
-import PseudoImage from "@/components/PseudoImage.vue";
-import ProgressBar from "@/components/ProgressBar.vue";
+import wishlistItemsService from "@/services/wishlistItemsService"
+import TagBadge from "@/components/TagBadge.vue"
+import profileService from "@/services/profileService"
+import dateUtils from "@/js/utils/DateUtils"
+import { Component, Prop, Vue } from "vue-property-decorator"
+import UserProfileEntity from "@/db/model/UserProfileEntity"
+import PseudoImage from "@/components/PseudoImage.vue"
+import ProgressBar from "@/components/ProgressBar.vue"
 
 @Component<FeedItem>({
   name: "FeedItem",
   components: { ProgressBar, PseudoImage, TagBadge },
   async beforeMount(): Promise<void> {
-    this.profile = await profileService.getUserProfileOrNull((this.item as any)?.stored?.uid as string || "") as any;
+    this.profile = (await profileService.getUserProfileOrNull(
+      ((this.item as any)?.stored?.uid as string) || ""
+    )) as any
   },
 })
 export default class FeedItem extends Vue {
@@ -112,11 +123,11 @@ export default class FeedItem extends Vue {
   isAdded: boolean = false
 
   get user(): any {
-    return this.$store.state.user;
+    return this.$store.state.user
   }
 
   get isMyItem(): Boolean {
-    return this.item.stored.uid === this.user.uid;
+    return this.item.stored.uid === this.user.uid
   }
 
   get createdAtStr(): String {
@@ -125,14 +136,18 @@ export default class FeedItem extends Vue {
 
   addToMyList(item: any): void {
     if (this.isAdded) {
-      return;
+      return
     }
 
-    wishlistItemsService.create(item.stored);
-    this.isAdded = true;
+    wishlistItemsService.create(item.stored)
+    this.isAdded = true
   }
 }
 </script>
 
+<<<<<<< HEAD
 <style scoped>
 </style>
+=======
+<style scoped></style>
+>>>>>>> master
