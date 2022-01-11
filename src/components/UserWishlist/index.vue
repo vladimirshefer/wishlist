@@ -29,6 +29,7 @@
             :item="item"
             :editable="editable"
             @remove="removeWishlistItem(item.id)"
+            @archive="archiveWishlistItem(item)"
             @update="editItem($event)"
           />
         </div>
@@ -67,6 +68,11 @@ export default {
     removeWishlistItem(id) {
       if (this.editable) {
         db.wishlistItems.doc(id).delete();
+      }
+    },
+    archiveWishlistItem(item) {
+      if (this.editable) {
+        wishlistItemsService.edit(item.id, {... item, archived: true});
       }
     },
     editItem(item) {

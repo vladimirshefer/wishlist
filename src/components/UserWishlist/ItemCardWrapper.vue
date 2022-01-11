@@ -2,6 +2,7 @@
   <div class="my-1">
     <ItemCard v-show="!isEditing" :item="item" :editable="editable"
                       @remove="$emit('remove', $event)"
+                      @archive="$emit('archive', $event)"
                       @edit="isEditing = true"
     />
     <ItemEditForm v-if="isEditing" :item="item"

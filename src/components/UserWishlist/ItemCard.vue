@@ -12,6 +12,7 @@
               <div class="dropdown-b-dropdown">
                 <b-dropdown v-if="editable" variant="light" size="sm">
                   <b-dropdown-item @click="$emit('edit')">Изменить</b-dropdown-item>
+                  <b-dropdown-item @click="$emit('archive')">Архивировать</b-dropdown-item>
                   <b-dropdown-item @click="tryRemove">Удалить</b-dropdown-item>
                 </b-dropdown>
               </div>
@@ -54,6 +55,7 @@
           </div>
           <div>
             <span class="text-muted">{{ createdAtStr }}</span>
+            <span class="text-muted ml-1" v-if="item.archived">Архив</span>
           </div>
         </div>
       </div>
