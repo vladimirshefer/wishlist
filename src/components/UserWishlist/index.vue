@@ -103,6 +103,15 @@ export default {
                 ...it.data(),
                 id: it.id,
               };
+            })
+            .sort((a, b) => {
+              // Firstly push down all archived items
+              // then compare by date desc
+              let archivedSorting = !!a.archived - !!b.archived
+              if (archivedSorting != 0) {
+                return archivedSorting
+              }
+              return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
             });
             this.dataReady = true;
           }
