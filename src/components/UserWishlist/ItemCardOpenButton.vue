@@ -6,6 +6,7 @@
       target="_blank"
       size="sm"
       variant="primary"
+      class="mr-2"
     >
       Открыть
       <b-icon icon="box-arrow-up-right"/>

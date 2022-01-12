@@ -25,7 +25,10 @@
           </a>
         </router-link>
       </div>
-      <PseudoImage :text="item.stored.name" />
+      <div v-if="item.stored.imageLink" class="img-link">
+        <b-img :src="`${item.stored.imageLink}`" :alt="`${item.stored.name}`" class="img" ></b-img>
+      </div>
+      <PseudoImage v-else :text="item.stored.name" />
       <div>
         <p style="white-space: pre-line"
            :title="item.stored.description">
@@ -82,8 +85,8 @@
         </b-button>
         <b-button
           class="mr-2"
-          v-show="item.stored.donatelink"
-          :href="item.stored.donatelink"
+          v-show="item.stored.donateLink"
+          :href="item.stored.donateLink"
           target="_blank"
           size="sm"
           variant="warning"

@@ -77,6 +77,15 @@
             maxlength="200"
           />
         </b-form-group>
+        <b-form-group id="input-group-imagelink" label="Ссылка на изображение:" label-for="input-imagelink">
+          <b-form-input
+            id="input-imagelink"
+            v-model="form.imageLink"
+            type="url"
+            placeholder="https://..."
+            maxlength="200"
+          />
+        </b-form-group>
         <b-form-group
           id="input-group-donatelink"
           label="Ссылка для пожертвований (Яндекс Деньги, ЮMoney, PayPal или другой ресурс):"
@@ -84,7 +93,7 @@
         >
           <b-form-input
             id="input-donatelink"
-            v-model="form.donatelink"
+            v-model="form.donateLink"
             type="url"
             placeholder="https://..."
             maxlength="200"
@@ -138,7 +147,8 @@ export default {
         moneyCollected: 0,
         isMoneyCollectingEnabled: false,
         link: "",
-        donatelink: "",
+        donateLink: "",
+        imageLink: "",
         tags: [],
         description: "",
       },
