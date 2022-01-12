@@ -45,6 +45,10 @@ import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper.vue";
 import wishlistItemsService from "@/services/wishlistItemsService";
 import {Component, Prop, Vue} from "vue-property-decorator";
 
+type WishListItemDto = any & {
+  id: string | null;
+  archived: boolean
+};
 
 @Component<UserWishlist>({
   components: {ItemCardWrapper},
@@ -53,11 +57,11 @@ import {Component, Prop, Vue} from "vue-property-decorator";
       this.init(userId);
     },
     editable() {
-      this.init(this.userId);
+      this.init(this.userId!);
     },
   },
   beforeMount() {
-    this.init(this.userId);
+    this.init(this.userId!);
   }
 })
 export default class UserWishlist extends Vue {
@@ -67,7 +71,7 @@ export default class UserWishlist extends Vue {
   editable!: boolean
 
 
-  items: any[] = []
+  items: WishListItemDto[] = []
   dataReady: boolean = false
   unsubscribe: any = function () {/* Stub */}
 
@@ -78,28 +82,28 @@ export default class UserWishlist extends Vue {
     }
   }
 
-  archiveWishlistItem(item: any) {
+  archiveWishlistItem(item: WishListItemDto) {
     if (this.editable) {
       item.archived = true
       wishlistItemsService.edit(item.id, item);
     }
   }
 
-  editItem(item: any) {
+  editItem(item: WishListItemDto) {
     wishlistItemsService.edit(item.id, item)
   }
 
-  private itemsComparator = (a: any, b: any) => {
+  private itemsComparator = (a: WishListItemDto, b: WishListItemDto) => {
     // Firstly push down all archived items
     // then compare by date desc
-    let archivedSorting = (+a.archived) - (+b.archived)
+    let archivedSorting = (+!!a.archived) - (+!!b.archived)
     if (archivedSorting != 0) {
       return archivedSorting
     }
     return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
   };
 
-  init(userId: any) {
+  init(userId: string) {
     this.unsubscribe();
 
     if (userId != null) {
@@ -123,7 +127,7 @@ export default class UserWishlist extends Vue {
               return {
                 ...it.data(),
                 id: it.id,
-              } as any;
+              } as WishListItemDto;
             })
             .sort(this.itemsComparator);
             this.dataReady = true;
