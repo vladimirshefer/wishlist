@@ -39,89 +39,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import db from "@/db";
-import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper";
+import ItemCardWrapper from "@/components/UserWishlist/ItemCardWrapper.vue";
 import wishlistItemsService from "@/services/wishlistItemsService";
+import {Component, Prop, Vue} from "vue-property-decorator";
 
-export default {
-  name: "UserWishlist",
-  components: { ItemCardWrapper },
-  props: {
-    /**
-     * Used to filter list by owner.
-     */
-    userId: { type: String, required: false },
-    /**
-     * Show edit buttons/controls.
-     */
-    editable: { type: Boolean, required: false, default: false },
-  },
-  data() {
-    return {
-      items: [],
-      dataReady: false,
-      unsubscribe: function() {/* Stub */},
-    };
-  },
-  methods: {
-    removeWishlistItem(id) {
-      if (this.editable) {
-        db.wishlistItems.doc(id).delete();
-      }
-    },
-    archiveWishlistItem(item) {
-      if (this.editable) {
-        wishlistItemsService.edit(item.id, {... item, archived: true});
-      }
-    },
-    editItem(item) {
-      wishlistItemsService.edit(item.id, item)
-    },
-    init(userId) {
-      this.unsubscribe();
 
-      if (userId != null) {
-        let targetCollectionSelection = db.wishlistItems.where(
-          "uid",
-          "==",
-          userId
-        );
-
-        if (!this.editable) {
-          targetCollectionSelection = targetCollectionSelection.where(
-            "private",
-            "==",
-            false
-          );
-        }
-
-        this.unsubscribe = targetCollectionSelection.onSnapshot(
-          (querySnapshot) => {
-            this.items = querySnapshot.docs.map((it) => {
-              return {
-                ...it.data(),
-                id: it.id,
-              };
-            })
-            .sort((a, b) => {
-              // Firstly push down all archived items
-              // then compare by date desc
-              let archivedSorting = !!a.archived - !!b.archived
-              if (archivedSorting != 0) {
-                return archivedSorting
-              }
-              return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
-            });
-            this.dataReady = true;
-          }
-        );
-      } else {
-        this.items = [];
-        this.dataReady = true;
-      }
-    },
-  },
+@Component<UserWishlist>({
+  components: {ItemCardWrapper},
   watch: {
     userId(userId) {
       this.init(userId);
@@ -132,8 +58,82 @@ export default {
   },
   beforeMount() {
     this.init(this.userId);
-  },
-};
+  }
+})
+export default class UserWishlist extends Vue {
+  @Prop()
+  userId!: string | null
+  @Prop()
+  editable!: boolean
+
+
+  items: any[] = []
+  dataReady: boolean = false
+  unsubscribe: any = function () {/* Stub */}
+
+
+  removeWishlistItem(id: string) {
+    if (this.editable) {
+      db.wishlistItems.doc(id).delete();
+    }
+  }
+
+  archiveWishlistItem(item: any) {
+    if (this.editable) {
+      item.archived = true
+      wishlistItemsService.edit(item.id, item);
+    }
+  }
+
+  editItem(item: any) {
+    wishlistItemsService.edit(item.id, item)
+  }
+
+  init(userId: any) {
+    this.unsubscribe();
+
+    if (userId != null) {
+      let targetCollectionSelection = db.wishlistItems.where(
+          "uid",
+          "==",
+          userId
+      );
+
+      if (!this.editable) {
+        targetCollectionSelection = targetCollectionSelection.where(
+            "private",
+            "==",
+            false
+        );
+      }
+
+      this.unsubscribe = targetCollectionSelection.onSnapshot(
+          (querySnapshot) => {
+            this.items = querySnapshot.docs.map((it) => {
+              return {
+                ...it.data(),
+                id: it.id,
+              } as any;
+            })
+            .sort((a, b) => {
+              // Firstly push down all archived items
+              // then compare by date desc
+              let archivedSorting = (+a.archived) - (+b.archived)
+              if (archivedSorting != 0) {
+                return archivedSorting
+              }
+              return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+            });
+            this.dataReady = true;
+          }
+      );
+    } else {
+      this.items = [];
+      this.dataReady = true;
+    }
+  }
+
+}
 </script>
 
 <style scoped></style>
