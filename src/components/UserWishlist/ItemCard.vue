@@ -54,7 +54,11 @@
             </b-button>
           </div>
           <div>
-            <span class="text-muted">{{ createdAtStr }}</span>
+            <router-link :to="'/wish/' + item.id" v-slot="{ href }" custom>
+              <a :href="href">
+                <small class="text-muted">{{ createdAtStr }}</small>
+              </a>
+            </router-link>
             <span class="text-muted ml-1" v-if="item.archived">Архив</span>
           </div>
         </div>
