@@ -22,5 +22,6 @@ export default interface WishlistItemEntity {
   link: string | null
   private: boolean
   tags: Array<string>
+  archived: boolean
 
 }
