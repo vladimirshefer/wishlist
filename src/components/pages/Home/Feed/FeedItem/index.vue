@@ -27,12 +27,15 @@
       </div>
       <PseudoImage :text="item.stored.name" />
       <div>
-        <p style="white-space: pre-line">{{ item.stored.description }}</p>
+        <p style="white-space: pre-line"
+           :title="item.stored.description">
+          {{ item.stored.description }}
+        </p>
       </div>
       <div>
         <b v-show="!item.stored.isMoneyCollectingEnabled"
-          >{{ item.stored.cost }} ₽</b
-        >
+          >{{ item.stored.cost }} ₽
+        </b>
         <ProgressBar
           v-show="item.stored.isMoneyCollectingEnabled"
           :max="item.stored.cost"
