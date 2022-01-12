@@ -4,52 +4,51 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import db from "@/db";
-import FeedItem from "@/components/pages/Home/Feed/FeedItem";
 import dayjs from "dayjs";
+import {Component, Prop, Vue} from "vue-property-decorator";
+import FeedItem from "@/components/pages/Home/Feed/FeedItem/index.vue";
+import WishlistItemEntity from "@/db/model/WishlistItemEntity";
 
-export default {
-  name: "Feed",
-  components: {FeedItem},
-  props: {
-    maxSize: {type: Number, required: false}
-  },
-  data() {
-    return {
-      items: [],
-    }
-  },
-  methods: {
-    init() {
-      let targetCollectionSelection = db.wishlistItems
-          .where("private", "==", false)
 
-      if (this.maxSize > 0) {
-        targetCollectionSelection = targetCollectionSelection
-            .limit(this.maxSize)
-      }
-
-      targetCollectionSelection.orderBy("createdAt", "desc")
-
-      targetCollectionSelection
-          .get()
-          .then(querySnapshot => {
-            this.items = querySnapshot.docs
-                .map(it => {
-                  let item = it.data()
-                  return {
-                    stored: {...item},
-                    id: it.id,
-                    createdAt: item.createdAt ? dayjs(new Date(item.createdAt.seconds * 1000)) : null,
-                  }
-                })
-                .sort((a, b) => b.createdAt.unix() - a.createdAt.unix()) // sort descending by date
-          })
-    },
-  },
+@Component<Feed>({
+  components: { FeedItem },
   beforeMount() {
     this.init();
+  }
+})
+export default class Feed extends Vue {
+  @Prop()
+  maxSize!: number
+
+  items: any[] = []
+
+  init() {
+    let targetCollectionSelection = db.wishlistItems
+    .where("private", "==", false)
+
+    if (this.maxSize > 0) {
+      targetCollectionSelection = targetCollectionSelection
+      .limit(this.maxSize)
+    }
+
+    targetCollectionSelection.orderBy("createdAt", "desc")
+
+    targetCollectionSelection
+    .get()
+    .then(querySnapshot => {
+      this.items = querySnapshot.docs
+      .map(it => {
+        let item = it.data()
+        return {
+          stored: {...item} as WishlistItemEntity,
+          id: it.id,
+          createdAt: item.createdAt ? dayjs(new Date(item.createdAt.seconds * 1000)) : null,
+        } as any
+      })
+      .sort((a, b) => b.createdAt.unix() - a.createdAt.unix()) // sort descending by date
+    })
   }
 }
 </script>
