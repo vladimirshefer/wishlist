@@ -89,6 +89,16 @@ export default class UserWishlist extends Vue {
     wishlistItemsService.edit(item.id, item)
   }
 
+  private itemsComparator = (a: any, b: any) => {
+    // Firstly push down all archived items
+    // then compare by date desc
+    let archivedSorting = (+a.archived) - (+b.archived)
+    if (archivedSorting != 0) {
+      return archivedSorting
+    }
+    return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+  };
+
   init(userId: any) {
     this.unsubscribe();
 
@@ -115,15 +125,7 @@ export default class UserWishlist extends Vue {
                 id: it.id,
               } as any;
             })
-            .sort((a, b) => {
-              // Firstly push down all archived items
-              // then compare by date desc
-              let archivedSorting = (+a.archived) - (+b.archived)
-              if (archivedSorting != 0) {
-                return archivedSorting
-              }
-              return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
-            });
+            .sort(this.itemsComparator);
             this.dataReady = true;
           }
       );
